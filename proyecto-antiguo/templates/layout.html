@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Servidor Crawler</title>
+	<link rel= "stylesheet" type= "text/css" href="{{url_for('static',filename='style.css') }}">
+	
+	<link rel= "stylesheet" type= "text/css" href="{{url_for('static',filename='/css/bootstrap.css') }}">
+	<script src="js/bootstrap.min.js"></script>
+	
+</head>
+
+
+<body class="centro">
+		<header> 
+			
+				<nav>
+					<div>
+						<img src="static/foto.png" alt="">
+						<h1 class="titulo">Crawler Robot</h1>
+					</div>
+				</nav>
+			</header>
+					<div class="btn btn-danger" type="">
+						<h2> Hola mis amigos Crawlerianos </h2>
+						<h3> Los muchachos del año pasado se van a ir robados </h3>
+					</div>
+
+					
+	{% block body %}
+	{% endblock %}
+		
+	
+</body>
+</html>
+
+
