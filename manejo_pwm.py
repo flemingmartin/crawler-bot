@@ -1,12 +1,26 @@
-from RPIO import PWM          #import the library for PWM
-import time                   #import time for pauses
-servo=PWM.Servo()             #initialize the servo library
-servo.set_servo(2,1500)       #center the MG90S
+import time
+
+import pigpio
+
+pi = pigpio.pi() # Connect to local Pi.
+
+pin = 23
+# set gpio modes
+pi.set_mode(pin, pigpio.OUTPUT)
+
+# start 1500 us servo pulses on gpio2
+pi.set_servo_pulsewidth(pin, 1500)
 time.sleep(1)
-for _i in range(10):          #loop between -90 and 90 degrees
-    servo.set_servo(2,2500)
+
+#for _i in range(5): #loop between -90 and 90 degrees
+while True: 
+    pi.set_servo_pulsewidth(pin,2500)
     time.sleep(1)
-    servo.set_servo(2,600)
+    pi.set_servo_pulsewidth(pin,600)
     time.sleep(1)
-servo.set_servo(2,1500)
-time.sleep(1)
+    pi.set_servo_pulsewidth(pin, 1500)
+    time.sleep(1)
+
+pi.set_servo_pulsewidth(pin, 0) # stop servo pulses
+
+pi.stop() # terminate connection and release resources
