@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tabla Fachera</title>
+
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    table {
+      width: 500px;
+      border-collapse: collapse;
+      height: 500px;
+      text-align: center;
+      font-size: 20px;
+      box-sizing: border-box;
+    }
+  </style>
+
+</head>
+<body>
+
+  <h2>Full-width Table</h2>
+
+  <button onclick="server.step()">Entrenar</button>
+
+  <table id="q_table">
+    <tr>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </table>
+
+
+  <script type="text/javascript">
+    
+    function update_table(new_weights){
+      console.log(new_weights);
+      var table = document.getElementById("q_table");
+      var rows = table.getElementsByTagName("tr");
+
+      for (var i=0; i<rows.length; i++) {
+        var columns = rows[i].getElementsByTagName("td");
+        for (var j=0; j<rows.length; j++) {
+          columns[j].innerHTML = new_weights[j + i*rows.length];
+        }
+      }
+    }
+
+  </script>
+
+</body>
+</html>
