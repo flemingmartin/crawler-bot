@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
-from python_code.caminar import AdminCaminar
+from python_code.admin_es import AdminES
 
 app = Flask(__name__)
-admin_caminar = AdminCaminar()
+adminES = AdminES()
 
 @app.route('/')
 def index():
@@ -32,7 +32,7 @@ def index():
 @app.route('/caminar')
 def caminar():
 	# Realizar un paso y redireccionar a index
-	admin_caminar.avanzar()
+	adminES.avanzar()
 	return redirect(url_for('index'))
 
 def pagina_no_encontrada(error):

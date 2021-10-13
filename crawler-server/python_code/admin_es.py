@@ -1,15 +1,15 @@
 import time
 import pigpio
 
-class AdminCaminar: 
+class AdminES: 
 	def __init__(self):
 		'''
-			Constructor de la clase AdminCaminar
+			Constructor de la clase AdminES
 		'''
 
 		# Conectar con Raspi local
 		self.pi = pigpio.pi()
-        
+		
 		# Pines digitales asociados a cada dispositivo
 		self.pin_servo1 = 23
 		self.pin_servo2 = 24
@@ -34,6 +34,19 @@ class AdminCaminar:
 		self.pi.set_servo_pulsewidth(pin, ancho)
 		time.sleep(0.5)
 
+	def _leer_encoder(self, pin):
+		'''
+			Función que se encarga de leer el encoder indicado y devolver su valor
+			Parametros
+			----------
+				pin: 	int - número de pin de datos del encoder
+			Devuelve
+			--------
+				value:  int - valor 0 si el encoder está tapado, y 1 si no lo está
+		'''
+		value = self.pi.read(pin)
+		return value
+		
 	def avanzar(self):
 		'''
 			Función que realiza un paso del crawler-bot y luego detiene los motores
@@ -41,17 +54,17 @@ class AdminCaminar:
 
 		# Luego de cada movimiento de un servo se realiza la lectura de los encoders
 		self._mover_servo(self.pin_servo1, 35) 
-		print("Encoder 1: ", self.pi.read(self.pin_encoder1))
-		print("Encoder 2: ", self.pi.read(self.pin_encoder2))
+		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
 		self._mover_servo(self.pin_servo2, 35)
-		print("Encoder 1: ", self.pi.read(self.pin_encoder1))
-		print("Encoder 2: ", self.pi.read(self.pin_encoder2))
+		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
 		self._mover_servo(self.pin_servo1, 0)
-		print("Encoder 1: ", self.pi.read(self.pin_encoder1))
-		print("Encoder 2: ", self.pi.read(self.pin_encoder2))
+		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
 		self._mover_servo(self.pin_servo2, 80)
-		print("Encoder 1: ", self.pi.read(self.pin_encoder1))
-		print("Encoder 2: ", self.pi.read(self.pin_encoder2))
+		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
 
 		# Posicionar en estado de reposo
 		self._mover_servo(self.pin_servo1, 10)
