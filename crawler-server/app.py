@@ -44,4 +44,5 @@ def pagina_no_encontrada(error):
 
 if __name__=='__main__':
 	app.register_error_handler(404, pagina_no_encontrada)
-	app.run(host='0.0.0.0', port=5000)
+	#app.run(host='0.0.0.0', port=5000)     # Para red local mediante ethernet
+	app.run(host='192.168.4.1', port=5000)  # Cuando está como access point
