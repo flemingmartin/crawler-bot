@@ -182,6 +182,7 @@
 	</div>
 	<div class="derecha">
 		<center><a href="{{url_for('caminar')}}">Avanzar</a></center>
-		<center><a href="#" class="deshabilitado">Entrenar</a></center>
+		<center><button onclick='server.entrenar()' class="deshabilitado">Entrenar</button></center>
+		<center><button onclick='server.detener()' class="deshabilitado">Detener</button></center>
 	</div>
 {% endblock %}

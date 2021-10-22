@@ -22,7 +22,7 @@ class AdminES:
 		self.pi.set_mode(self.pin_encoder1, pigpio.INPUT)
 		self.pi.set_mode(self.pin_encoder2, pigpio.INPUT)
 
-	def _mover_servo(self, pin, angulo):
+	def mover_servo(self, pin, angulo):
 		'''
 			Función que realiza el movimiento de un servomotor
 			Parametros
@@ -53,22 +53,22 @@ class AdminES:
 		'''
 
 		# Luego de cada movimiento de un servo se realiza la lectura de los encoders
-		self._mover_servo(self.pin_servo1, 35) 
+		self.mover_servo(self.pin_servo1, 35) 
 		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
 		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
-		self._mover_servo(self.pin_servo2, 35)
+		self.mover_servo(self.pin_servo2, 35)
 		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
 		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
-		self._mover_servo(self.pin_servo1, 0)
+		self.mover_servo(self.pin_servo1, 0)
 		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
 		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
-		self._mover_servo(self.pin_servo2, 80)
+		self.mover_servo(self.pin_servo2, 80)
 		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
 		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
 
 		# Posicionar en estado de reposo
-		self._mover_servo(self.pin_servo1, 10)
-		self._mover_servo(self.pin_servo2, 85)
+		self.mover_servo(self.pin_servo1, 10)
+		self.mover_servo(self.pin_servo2, 85)
 		self.pi.set_servo_pulsewidth(self.pin_servo1, 0) 
 		self.pi.set_servo_pulsewidth(self.pin_servo2, 0)
 
