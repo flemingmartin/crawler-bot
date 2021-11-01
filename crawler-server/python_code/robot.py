@@ -51,7 +51,7 @@ class Robot():
 
 		#si me sali de la pantalla -> perdi
 		if memori:
-			reward = -1
+			reward = -5
 
 		return tuple(self.state), reward, memori
 

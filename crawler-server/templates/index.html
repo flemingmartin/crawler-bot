@@ -4,183 +4,83 @@
 
 {% block body %}
 	<center><h1>{{ data.bienvenida }}</h1></center>
-	<div class="izquierda">
+	<div class="bloque_izquierda">
 		<center><h2 class="tablaq_title"> Tabla Q </h2></center>
-		<div class="matriz">
-			<div class="caja_padre1">
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[0][0][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[0][0][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[0][0][3]|float}}</h3>
-				</div>
+		<div class="tabla" id="tabla">
+		    <div class="row">
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">1</div>
+		        <div class="numero derecha">2</div>
+		        <div class="numero abajo">3</div>
+		        <div class="box_style"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">4</div>
+		        <div class="numero izquierda">5</div>
+		        <div class="numero derecha">6</div>
+		        <div class="numero abajo">7</div>
+		        <div class="box_style"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">8</div>
+		        <div class="numero izquierda">9</div>
+		        <div class="numero derecha">10</div>
+		        <div class="numero abajo">11</div>
+		        <div class="box_style"></div>
+		      </div>
+		    </div>
 
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[0][0][1]|float}}</h3>
-				</div>
-			
-			</div>
+		    <div class="row">
+		      <div class="box">
+		        <div class="numero arriba">12</div>
+		        <div class="numero izquierda">13</div>
+		        <div class="numero derecha">14</div>
+		        <div class="numero abajo">15</div>
+		        <div class="box_style"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">16</div>
+		        <div class="numero izquierda">17</div>
+		        <div class="numero derecha">18</div>
+		        <div class="numero abajo">19</div>
+		        <div class="box_style"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">20</div>
+		        <div class="numero izquierda">21</div>
+		        <div class="numero derecha">22</div>
+		        <div class="numero abajo">23</div>
+		        <div class="box_style"></div>
+		      </div>
+		    </div>
 
-			<div class="caja_padre2">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[0][1][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[0][1][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[0][1][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[0][1][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre3">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[0][2][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[0][2][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[0][2][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[0][2][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre4">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[1][0][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[1][0][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[1][0][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[1][0][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre5">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[1][1][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[1][1][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[1][1][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[1][1][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre6">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[1][2][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[1][2][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[1][2][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[1][2][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre7">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[2][0][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[2][0][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[2][0][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[2][0][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre8">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[2][1][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[2][1][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[2][1][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[2][1][1]|float}}</h3>
-				</div>
-			
-			</div>
-			<div class="caja_padre9">
-				
-				<div class="caja1-up">
-					<h3 > {{'%0.2f' % data.Q[2][2][0]|float}}	</h3>
-				</div>
-			
-				<div class="caja1-left">
-					<h3 >{{'%0.2f' % data.Q[2][2][2]|float}}</h3>
-				</div>
-			
-				<div class="caja1-right">
-					<h3 >{{'%0.2f' % data.Q[2][2][3]|float}}</h3>
-				</div>
-
-				<div class="caja1-down">
-					<h3>{{'%0.2f' % data.Q[2][2][1]|float}}</h3>
-				</div>
-			
-			</div>
-		</div>
+		    <div class="row">
+		      <div class="box">
+		        <div class="numero arriba">24</div>
+		        <div class="numero izquierda">25</div>
+		        <div class="numero derecha">26</div>
+		        <div class="numero abajo">27</div>
+		        <div class="box_style"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">28</div>
+		        <div class="numero izquierda">29</div>
+		        <div class="numero derecha">30</div>
+		        <div class="numero abajo">31</div>
+		        <div class="box_style"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">32</div>
+		        <div class="numero izquierda">33</div>
+		        <div class="numero derecha">34</div>
+		        <div class="numero abajo">35</div>
+		        <div class="box_style"></div>
+		      </div>
+		    </div>
+	  	</div>
 	</div>
-	<div class="derecha">
+	<div class="bloque_derecha">
 		<center><a href="{{url_for('caminar')}}">Avanzar</a></center>
 		<center><button onclick='server.entrenar()' class="deshabilitado">Entrenar</button></center>
 		<center><button onclick='server.detener()' class="deshabilitado">Detener</button></center>
