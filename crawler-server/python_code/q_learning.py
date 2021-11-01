@@ -1,11 +1,14 @@
-from python_code.robot import Robot
 import numpy as np
 import time
 import random
 
+from python_code.robot import Robot
+
 class QLearning():
 	def __init__(self,app):
 		self.app = app
+		self.robot = Robot()
+		self.done = False
 
 		self.LEARNING_RATE = 0.4
 		self.DISCOUNT = 0.9
@@ -16,15 +19,9 @@ class QLearning():
 		self.ACTIONS = 4
 		self.STATE_SIZE = (3,3)	
 
-		self.q_table = np.zeros(shape=(self.STATE_SIZE + (self.ACTIONS,)))
-		self.robot = Robot()
-
-		self.done = False
-
-		
-
 	def entrenar(self):
 		#for iteration in range(self.ITERATIONS):
+		self.q_table = np.zeros(shape=(self.STATE_SIZE + (self.ACTIONS,)))
 		while not self.done:
 			state = self.robot.reset()
 
@@ -54,7 +51,6 @@ class QLearning():
 				if movements == self.MAX_MOVEMENTS:
 					memori = True
 					reward = -1
-
 				
 
 				max_future_q = np.max(self.q_table[new_state])
@@ -64,12 +60,15 @@ class QLearning():
 				self.q_table[state + (action,)] = new_q 
 
 				string = "State: {} - Action {} - New_State {} - Reward: {}".format(state, action,new_state,reward)
-				self.app.js.console.log(string)
+				# self.app.js.console.log(string)
 
 				if reward == -1:
-					self.app.js.console.log("RIP")
+					# self.app.js.console.log("RIP")
+					count=0
 
-				state = new_state				
+				state = new_state
 
 		#GUARDAR TABLA
-		#self.q_table.save()
+		self.robot.reposo()
+		return self.q_table
+		

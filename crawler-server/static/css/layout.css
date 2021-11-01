@@ -10,7 +10,7 @@ h1{
 	font-size: 3em;
 }
 
-a{
+button, .btn{
 	display:  inline-block;
 	padding:  20px;
 	font-size: 1.2em;
@@ -20,6 +20,7 @@ a{
 	border-radius: 5px;
 	text-decoration: none;
 	margin-bottom: 1em;
+	cursor:  pointer;
 }
 
 .deshabilitado{
@@ -45,6 +46,10 @@ a{
 	width: 49%;
 	float:  left;
 	/*background-color: blue;*/
+}
+
+.letra-blanca{
+	color: white;
 }
 
 .tablaq_title{

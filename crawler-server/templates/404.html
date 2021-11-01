@@ -3,10 +3,10 @@
 {% block title %} {{ data.titulo }} {% endblock %}
 
 {% block body %}
-	<center>
+	<center class="letra-blanca">
 		<h1>¡ERROR 404!</h1>
 		<h2>No existe la página</h2>
 		<h3>La página no fue encontrada</h3>
-		<a href="{{url_for('index')}}">Inicio</a>
+		<a class="btn" href="{{url_for('index')}}">Inicio</a>
 	</center>
 {% endblock %}
