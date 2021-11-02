@@ -1,6 +1,7 @@
 *{
-	font-family: "Candara";
+  font-family: "P052";
 }
+
 body{
 	background-color: #252525;
 }
@@ -10,16 +11,48 @@ h1{
 	font-size: 3em;
 }
 
-a{
-	display:  inline-block;
+h2 {
+  font-size: 2em;
+}
+
+.button {
+  display:  inline-block;
 	padding:  20px;
-	font-size: 1.2em;
-	background-color: red;
+	font-size: 1.5em;
+	font-weight: bold;
 	color: white;
 	border: solid 3px white;
-	border-radius: 5px;
+	border-radius: 15px;
 	text-decoration: none;
-	margin-bottom: 1em;
+	margin-bottom: 0.7em;
+	cursor: pointer;
+	width: 8em;
+}
+
+.avanzar_button {
+  background-color: #0B0B61;
+}
+
+.entrenar_button {
+  background-color: #0B610B;
+}
+
+.detener_button {
+  background-color: #8A0808;
+}
+
+.zoom_button {
+  transition: transform .2s;
+}
+
+.zoom_button:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+.hidden {
+  display: none;
 }
 
 .deshabilitado{
@@ -45,22 +78,28 @@ a{
 }
 
 .tablaq_title{
-	margin-left: 1.7em;
+	margin-left: 3.7em;
 	color: white;	
 }
+
 .tabla{
   --table_size: 450px;
-  margin-top: 15%;
   margin-left: 25%;
   width: var(--table_size);
   height: var(--table_size);
 }
+
+.botones {
+  margin-top: 45px;
+}
+
 .box{
   position: relative;
   width: 33.3%;
   height: 33.3%;
   float: left;
 }
+
 .box .box_style{
   --border_size: calc(var(--table_size)/6);
   width: 0;
@@ -72,6 +111,7 @@ a{
   border-top-color: #464646;
   border-bottom-color: #565656;
 }
+
 .box .numero{
   --line_height: calc(var(--table_size)/15);
   --font_size: calc(var(--table_size)/24);
@@ -83,18 +123,22 @@ a{
   font-size: var(--font_size);
   text-align: center;
 }
+
 .box .arriba{
   top: 15%;
   left: 40%;
 }
+
 .box .izquierda{
   bottom: 15%;
   left: 40%;
 }
+
 .box .derecha{
   left: 15%;
   top: 40%;
 }
+
 .box .abajo{
   right: 15%;
   top: 40%;

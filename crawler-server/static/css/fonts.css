@@ -1,0 +1,160 @@
+@font-face {
+    font-family: 'Free Serif';
+    font-style: normal;
+    src: local('Free Serif'), url(../fonts/FreeSerif-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Free Serif';
+    font-style: italic;
+    src: local('Free Serif'), url(../fonts/FreeSerif-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Free Serif';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Free Serif'), url(../fonts/FreeSerif-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Free Serif';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Free Serif'), url(../fonts/FreeSerif-BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'Liberation Serif';
+    font-style: normal;
+    src: local('Liberation Serif'), url(../fonts/LiberationSerif-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Liberation Serif';
+    font-style: italic;
+    src: local('Liberation Serif'), url(../fonts/LiberationSerif-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Liberation Serif';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Liberation Serif'), url(../fonts/LiberationSerif-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Liberation Serif';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Liberation Serif'), url(../fonts/LiberationSerif-BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'C059';
+    font-style: normal;
+    src: local('C059'), url(../fonts/C059-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'C059';
+    font-style: italic;
+    src: local('C059'), url(../fonts/C059-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'C059';
+    font-style: normal;
+    font-weight: bold;
+    src: local('C059'), url(../fonts/C059-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'C059';
+    font-style: italic;
+    font-weight: bold;
+    src: local('C059'), url(../fonts/C059-BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'P052';
+    font-style: normal;
+    src: local('P052'), url(../fonts/P052-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'P052';
+    font-style: italic;
+    src: local('P052'), url(../fonts/P052-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'P052';
+    font-style: normal;
+    font-weight: bold;
+    src: local('P052'), url(../fonts/P052-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'P052';
+    font-style: italic;
+    font-weight: bold;
+    src: local('P052'), url(../fonts/P052-BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'Candara';
+    font-style: normal;
+    src: local('Candara'), url(../fonts/Candara-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Candara';
+    font-style: italic;
+    src: local('Candara'), url(../fonts/Candara-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Candara';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Candara'), url(../fonts/Candara-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Candara';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Candara'), url(../fonts/Candara-BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'Georgia';
+    font-style: normal;
+    src: local('Georgia'), url(../fonts/Georgia-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Georgia';
+    font-style: italic;
+    src: local('Georgia'), url(../fonts/Georgia-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Georgia';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Georgia'), url(../fonts/Georgia-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Georgia';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Georgia'), url(../fonts/Georgia-BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'Sylfaen';
+    src: local('Sylfaen'), url(../fonts/Sylfaen.ttf);
+}
