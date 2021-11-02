@@ -15,6 +15,11 @@ h2 {
   font-size: 2em;
 }
 
+h3 {
+  font-size: 1.5em;
+  color: #AAAAAA;
+}
+
 .button {
   display:  inline-block;
 	padding:  20px;
@@ -33,11 +38,15 @@ h2 {
   background-color: #0B0B61;
 }
 
+.detener_button {
+  background-color: #8A0808;
+}
+
 .entrenar_button {
   background-color: #0B610B;
 }
 
-.detener_button {
+.finalizar_button {
   background-color: #8A0808;
 }
 
@@ -55,9 +64,14 @@ h2 {
   display: none;
 }
 
+.estado {
+  margin-top: 500px;
+}
+
 .deshabilitado{
 	background-color: #252525;
 	border-color: gray;
+	cursor: default;
 }
 
 .bloque_derecha{
@@ -69,6 +83,18 @@ h2 {
 	box-sizing: border-box;
 	margin-top: 10%;
 }
+
+.bloque_derecha_inferior{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 50%;
+	float:  left;
+	box-sizing: border-box;
+	margin-top: 10%;
+	margin-left: 15%;
+}
+
 .bloque_izquierda{
 	display: inline-block;
 	margin: 0;
@@ -78,8 +104,9 @@ h2 {
 }
 
 .tablaq_title{
-	margin-left: 3.7em;
-	color: white;	
+	text-align: center;
+	color: white;
+  margin-left: 17%;
 }
 
 .tabla{
@@ -110,6 +137,26 @@ h2 {
   border-right-color: #363636;
   border-top-color: #464646;
   border-bottom-color: #565656;
+  outline: solid #BBBBBB 1px;
+}
+
+.crossed {
+  margin-top: calc(var(--table_size)/-3);
+  width: calc(var(--table_size)/3);
+  height: calc(var(--table_size)/3);
+  background:
+    linear-gradient(to top left,
+    rgba(192,192,192,0) 0%,
+    rgba(192,192,192,0) calc(50% - 1px),
+    rgba(192,192,192,1) 50%,
+    rgba(192,192,192,0) calc(50% + 1px),
+    rgba(192,192,192,0) 100%),
+    linear-gradient(to top right,
+    rgba(192,192,192,0) 0%,
+    rgba(192,192,192,0) calc(50% - 1px),
+    rgba(192,192,192,1) 50%,
+    rgba(192,192,192,0) calc(50% + 1px),
+    rgba(192,192,192,0) 100%);
 }
 
 .box .numero{
