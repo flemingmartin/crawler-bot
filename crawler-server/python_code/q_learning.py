@@ -13,7 +13,8 @@ class QLearning():
 		self.LEARNING_RATE = 0.4
 		self.DISCOUNT = 0.9
 		self.EPSILON = 0.9
-		self.LEARNING_EPSILON = 0.01
+		self.LEARNING_EPSILON = 0.001
+		self.MIN_EPSILON = 0.15
 		self.MAX_MOVEMENTS = 15
 		self.ITERATIONS = 50
 		self.ACTIONS = 4
@@ -35,7 +36,8 @@ class QLearning():
 				else:
 					action = np.argmax(self.q_table[state])
 
-				self.EPSILON-=self.LEARNING_EPSILON
+				if self.EPSILON>self.MIN_EPSILON:
+					self.EPSILON-=self.LEARNING_EPSILON
 
 				new_state,reward,memori = self.robot.step(action)
 
@@ -50,8 +52,7 @@ class QLearning():
 				movements+=1
 				if movements == self.MAX_MOVEMENTS:
 					memori = True
-					reward = -1
-				
+					reward = -5
 
 				max_future_q = np.max(self.q_table[new_state])
 				current_q = self.q_table[state + (action, )]
@@ -62,11 +63,9 @@ class QLearning():
 				string = "State: {} - Action {} - New_State {} - Reward: {}".format(state, action,new_state,reward)
 				# self.app.js.console.log(string)
 
-				if reward == -1:
-					# self.app.js.console.log("RIP")
-					count=0
-
 				state = new_state
+
+				self.app.js.update_table(list(self.q_table.flatten()))				
 
 		#GUARDAR TABLA
 		self.robot.reposo()

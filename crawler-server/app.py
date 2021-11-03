@@ -47,8 +47,8 @@ class App:
 		db.session.commit()
 		print(q_table)
 
-		time.sleep(0.5)
-		self.js.location.reload()
+		# time.sleep(0.5)
+		# self.js.location.reload()
 
 	def detener(self):
 		self.Q.done=True
@@ -78,8 +78,10 @@ def index():
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',
-		'q_table': q_table
+		'q_table': list(q_table.flatten())
 	}
+	# dola = App.render(render_template('index.html', data=data))
+	# App.js.update_table(list(q_table.flatten()))
 	return App.render(render_template('index.html', data=data))
 
 

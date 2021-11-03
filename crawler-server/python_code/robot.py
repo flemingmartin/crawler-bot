@@ -66,7 +66,7 @@ class Robot():
 
 		#si me sali de la pantalla -> perdi
 		if memori or (old_state == [0,2] and self.state == [0,1]):
-			reward = -1
+			reward = -5
 
 		return tuple(self.state), reward, memori
 
