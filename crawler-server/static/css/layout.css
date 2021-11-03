@@ -1,6 +1,7 @@
 *{
-	font-family: "Candara";
+  font-family: "P052";
 }
+
 body{
 	background-color: #252525;
 }
@@ -10,22 +11,69 @@ h1{
 	font-size: 3em;
 }
 
-button, .btn{
-	display:  inline-block;
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: #AAAAAA;
+}
+
+.button {
+  display:  inline-block;
 	padding:  20px;
-	font-size: 1.2em;
-	background-color: red;
+	font-size: 1.5em;
+	font-weight: bold;
 	color: white;
 	border: solid 3px white;
-	border-radius: 5px;
+	border-radius: 15px;
 	text-decoration: none;
-	margin-bottom: 1em;
+	margin-bottom: 0.7em;
 	cursor:  pointer;
+	width: 8em;
+
+}
+
+.avanzar_button {
+  background-color: #0B0B61;
+}
+
+.detener_button {
+  background-color: #8A0808;
+}
+
+.entrenar_button {
+  background-color: #0B610B;
+}
+
+.finalizar_button {
+  background-color: #8A0808;
+}
+
+.zoom_button {
+  transition: transform .2s;
+}
+
+.zoom_button:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+.hidden {
+  display: none;
+}
+
+.estado {
+  margin-top: 500px;
 }
 
 .deshabilitado{
 	background-color: #252525;
 	border-color: gray;
+	cursor: default;
 }
 
 .bloque_derecha{
@@ -37,6 +85,18 @@ button, .btn{
 	box-sizing: border-box;
 	margin-top: 10%;
 }
+
+.bloque_derecha_inferior{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 50%;
+	float:  left;
+	box-sizing: border-box;
+	margin-top: 10%;
+	margin-left: 15%;
+}
+
 .bloque_izquierda{
 	display: inline-block;
 	margin: 0;
@@ -50,22 +110,29 @@ button, .btn{
 }
 
 .tablaq_title{
-	margin-left: 1.7em;
-	color: white;	
+	text-align: center;
+	color: white;
+  margin-left: 17%;
 }
+
 .tabla{
   --table_size: 450px;
-  margin-top: 15%;
   margin-left: 25%;
   width: var(--table_size);
   height: var(--table_size);
 }
+
+.botones {
+  margin-top: 45px;
+}
+
 .box{
   position: relative;
   width: 33.3%;
   height: 33.3%;
   float: left;
 }
+
 .box .box_style{
   --border_size: calc(var(--table_size)/6);
   width: 0;
@@ -76,7 +143,28 @@ button, .btn{
   border-right-color: #363636;
   border-top-color: #464646;
   border-bottom-color: #565656;
+  outline: solid #BBBBBB 1px;
 }
+
+.crossed {
+  margin-top: calc(var(--table_size)/-3);
+  width: calc(var(--table_size)/3);
+  height: calc(var(--table_size)/3);
+  background:
+    linear-gradient(to top left,
+    rgba(192,192,192,0) 0%,
+    rgba(192,192,192,0) calc(50% - 1px),
+    rgba(192,192,192,1) 50%,
+    rgba(192,192,192,0) calc(50% + 1px),
+    rgba(192,192,192,0) 100%),
+    linear-gradient(to top right,
+    rgba(192,192,192,0) 0%,
+    rgba(192,192,192,0) calc(50% - 1px),
+    rgba(192,192,192,1) 50%,
+    rgba(192,192,192,0) calc(50% + 1px),
+    rgba(192,192,192,0) 100%);
+}
+
 .box .numero{
   --line_height: calc(var(--table_size)/15);
   --font_size: calc(var(--table_size)/24);
@@ -88,18 +176,22 @@ button, .btn{
   font-size: var(--font_size);
   text-align: center;
 }
+
 .box .arriba{
   top: 15%;
   left: 40%;
 }
+
 .box .izquierda{
   bottom: 15%;
   left: 40%;
 }
+
 .box .derecha{
   left: 15%;
   top: 40%;
 }
+
 .box .abajo{
   right: 15%;
   top: 40%;

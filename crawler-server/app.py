@@ -37,7 +37,6 @@ class App:
 	
 	def entrenar(self):
 		self.Q.done=False
-		self.js.desaparecerEntrenar()
 
 		q_table = self.Q.entrenar()
 		# q_table = np.zeros((3,3,4)) # para poner una tabla vacia
@@ -52,7 +51,6 @@ class App:
 
 	def detener(self):
 		self.Q.done=True
-		self.js.desaparecerDetener()
 		self.js.console.log("listorti")
 
 	def avanzar(self):
@@ -89,7 +87,7 @@ def index():
 # def caminar():
 # 	# Realizar un paso y redireccionar a index
 # 	# adminES.avanzar()
-# Agregar en la vista: <center><button href="{{url_for('caminar')}}">Avanzar</button></center>
+# # Agregar en la vista: <center><button href="{{url_for('caminar')}}">Avanzar</button></center>
 # 	return redirect(url_for('index'))
 
 def pagina_no_encontrada(error):

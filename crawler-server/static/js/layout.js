@@ -1,17 +1,3 @@
-function hola(){
-	alert("Hola");
-}
-
-function desaparecerEntrenar(){
-	document.getElementById("entrenar").style.display = "none"
-	document.getElementById("detener").style.display = "block"
-}
-
-function desaparecerDetener(){
-	document.getElementById("detener").style.display = "none"
-	document.getElementById("entrenar").style.display = "block"
-}
-
 function update_table(new_weights){
 
 	var t = document.getElementById("tabla");
