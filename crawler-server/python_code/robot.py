@@ -1,6 +1,7 @@
 _raspi = False
 
 from python_code.stoppablethread import StoppableThread
+import random
 
 if _raspi: 
 	print("--- SISTEMA CARGADO EN UNA RASPI ---")
@@ -98,23 +99,37 @@ class Robot():
 
 	def lectura_encoders(self):
 		encoders = [0,0]
-		encoders[0] = self.adminES.leer_encoder(self.adminES.pin_encoder1)
-		encoders[1] = self.adminES.leer_encoder(self.adminES.pin_encoder2)
+		if _raspi:
+			encoders[0] = self.adminES.leer_encoder(self.adminES.pin_encoder1)
+			encoders[1] = self.adminES.leer_encoder(self.adminES.pin_encoder2)
+		else:
+			encoders[0] = int(random.randint(0, 3) == 0)
+			encoders[1] = int(random.randint(0, 3) == 0)
 		print(encoders)
 		return encoders
 
 	def calcular_avance(self, encoder):
-		
-		if self.encoders == encoder and not self.lectura_bloqueada:
-			return 0 
+		if encoder == [0,0]:  # El valor obtenido no es útil (ambos en cero)
+			self.encoders = [0,0]  # Descartar lectura anterior
 		else:
-			self.lectura_bloqueada = True
-			return 5
+			if self.encoders == [0,0]:  # El valor almacenado no es útil (ambos en cero)
+				self.encoders == encoder  # Sólo actualizar el nuevo valor de los encoders
+			else:  # El nuevo valor y el valor almacenado son ambos diferentes de [0,0]
+				if encoder[0] > self.encoders[0]:  # El encoder 0 pasó de 0 a 1
+					self.encoders == encoder  # Actualizar el nuevo valor de los encoders
+					self.lectura_bloqueada = True  # Bloquea el movimiento detectado hasta que sea leído
+					return 1  # El movimiento es hacia adelante
+				if encoder[1] > self.encoders[1]:  # El encoder 1 pasó de 0 a 1
+					self.encoders == encoder  # Actualizar el nuevo valor de los encoders
+					self.lectura_bloqueada = True  # Bloquea el movimiento detectado hasta que sea leído
+					return -1  # El movimiento es hacia atrás
+		if not self.lectura_bloqueada:
+			return 0  # el robot no se movió desde la última lectura de movimiento detectado
 
 	def threading_function(self):
 		while not self.thread_encoders.stopped():
 			encoders = self.lectura_encoders()
-			self.recompensa = self.calcular_avance(encoders)
+			self.recompensa = self.calcular_avance(encoders) * 5
 			self.encoders = encoders
 
 
