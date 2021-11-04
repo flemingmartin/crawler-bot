@@ -34,7 +34,7 @@ class AdminES:
 		self.pi.set_servo_pulsewidth(pin, ancho)
 		time.sleep(0.5)
 
-	def _leer_encoder(self, pin):
+	def leer_encoder(self, pin):
 		'''
 			Función que se encarga de leer el encoder indicado y devolver su valor
 			Parametros
@@ -54,17 +54,17 @@ class AdminES:
 
 		# Luego de cada movimiento de un servo se realiza la lectura de los encoders
 		self.mover_servo(self.pin_servo1, 35) 
-		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
-		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
+		print("Encoder 1: ", self.leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self.leer_encoder(self.pin_encoder2))
 		self.mover_servo(self.pin_servo2, 35)
-		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
-		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
+		print("Encoder 1: ", self.leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self.leer_encoder(self.pin_encoder2))
 		self.mover_servo(self.pin_servo1, 0)
-		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
-		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
+		print("Encoder 1: ", self.leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self.leer_encoder(self.pin_encoder2))
 		self.mover_servo(self.pin_servo2, 80)
-		print("Encoder 1: ", self._leer_encoder(self.pin_encoder1))
-		print("Encoder 2: ", self._leer_encoder(self.pin_encoder2))
+		print("Encoder 1: ", self.leer_encoder(self.pin_encoder1))
+		print("Encoder 2: ", self.leer_encoder(self.pin_encoder2))
 
 		# Posicionar en estado de reposo
 		self.mover_servo(self.pin_servo1, 10)
