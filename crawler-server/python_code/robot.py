@@ -48,11 +48,11 @@ class Robot():
 
 		if not memori:
 			if action < 2:
-				print("Mueve servo 0 a posicion " + str(self.angulos[self.state[0]]))
+				# print("Mueve servo 0 a posicion " + str(self.angulos[self.state[0]]))
 				if _raspi:
 					self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
 			else:
-				print("Mueve servo 1 a posicion " + str(self.angulos[self.state[1]]))
+				# print("Mueve servo 1 a posicion " + str(self.angulos[self.state[1]]))
 				if _raspi:
 					self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
 
@@ -62,7 +62,7 @@ class Robot():
 		#	reward = 1
 		
 		if old_state == [0,1] and self.state == [0,2]:
-			reward = 1
+			reward = 2
 
 		#si me sali de la pantalla -> perdi
 		if memori or (old_state == [0,2] and self.state == [0,1]):
@@ -70,8 +70,8 @@ class Robot():
 
 		return tuple(self.state), reward, memori
 
-	def render(self):
-		pass
+	def get_state(self):
+		return tuple(self.state)
 
 	def reposo(self):
 		if _raspi:

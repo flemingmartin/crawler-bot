@@ -34,17 +34,21 @@ class QTable(db.Model):
 class App:
 	def __init__(self):
 		self.Q = QLearning(self)
+
+		database = QTable.query.all() 
+		q_table =(database[-1].q_table)
+		self.Q.inicializar_q_table(q_table)
 	
 	def entrenar(self):
 		self.Q.done=False
 
+		self.Q.inicializar_q_table()
 		q_table = self.Q.entrenar()
 		# q_table = np.zeros((3,3,4)) # para poner una tabla vacia
 
 		entrada_db = QTable(q_table=q_table)
 		db.session.add(entrada_db)
 		db.session.commit()
-		print(q_table)
 
 		# time.sleep(0.5)
 		# self.js.location.reload()
@@ -54,9 +58,8 @@ class App:
 		self.js.console.log("listorti")
 
 	def avanzar(self):
-		if _raspi:
-			adminES.avanzar()
-		print("avanzar")
+		self.Q.done=False
+		self.Q.avanzar()
 
 @app.route('/')
 def index():

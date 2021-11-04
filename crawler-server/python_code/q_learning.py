@@ -13,31 +13,39 @@ class QLearning():
 		self.LEARNING_RATE = 0.4
 		self.DISCOUNT = 0.9
 		self.EPSILON = 0.9
-		self.LEARNING_EPSILON = 0.001
+		self.LEARNING_EPSILON = 0.002
 		self.MIN_EPSILON = 0.15
 		self.MAX_MOVEMENTS = 15
 		self.ITERATIONS = 50
 		self.ACTIONS = 4
 		self.STATE_SIZE = (3,3)	
 
+	def inicializar_q_table(self, q_table = None):
+		if q_table is None:
+			self.q_table = np.zeros(shape=(self.STATE_SIZE + (self.ACTIONS,)))
+		else:
+			assert q_table.shape == (self.STATE_SIZE + (self.ACTIONS,))
+			self.q_table = q_table
+
 	def entrenar(self):
 		#for iteration in range(self.ITERATIONS):
-		self.q_table = np.zeros(shape=(self.STATE_SIZE + (self.ACTIONS,)))
+		epsilon = self.EPSILON
+
 		while not self.done:
 			state = self.robot.reset()
 
 			memori = False
 			movements = 0
 			pasos = 0
-			while not memori:
+			while not memori and not self.done:
 				
-				if random.random() < self.EPSILON:
+				if random.random() < epsilon:
 					action = random.randint(0,3)
 				else:
 					action = np.argmax(self.q_table[state])
 
-				if self.EPSILON>self.MIN_EPSILON:
-					self.EPSILON-=self.LEARNING_EPSILON
+				if epsilon>self.MIN_EPSILON:
+					epsilon-=self.LEARNING_EPSILON
 
 				new_state,reward,memori = self.robot.step(action)
 
@@ -66,6 +74,17 @@ class QLearning():
 				state = new_state
 
 				self.app.js.update_table(list(self.q_table.flatten()))				
+
+		#GUARDAR TABLA
+		self.robot.reposo()
+		return self.q_table
+
+	def avanzar(self):
+		state = self.robot.reset()
+
+		while not self.done:
+			action = np.argmax(self.q_table[state])
+			state,_,_ = self.robot.step(action)				
 
 		#GUARDAR TABLA
 		self.robot.reposo()
