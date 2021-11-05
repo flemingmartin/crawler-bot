@@ -1,4 +1,4 @@
-_raspi = True
+_raspi = False
 
 import random 
 import time

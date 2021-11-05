@@ -1,0 +1,5 @@
+# Byte-compiled / optimized / DLL files
+crawler_server/__pycache__/
+crawler-server/python_code/__pycache__/
+*.py[cod]
+*$py.class
