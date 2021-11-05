@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta http_equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+	<link rel="icon" href="{{ url_for('static', filename='images/Logo.png') }}">
+	<link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+	{% block body %}
+	{% endblock %}
+	
+	{% block js_imports%}
+	{% endblock %}
+</body>
+</html>

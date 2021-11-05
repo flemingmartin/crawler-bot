@@ -1,0 +1,119 @@
+{% extends './layout.html' %}
+
+{% block title %} {{ data.titulo }} {% endblock %}
+
+{% block body %}
+	<center><h1>{{ data.bienvenida }} <img src="static/images/Logo.png" style="vertical-align: bottom; width: 4%;"></h1></center>
+	<div class="bloque_izquierda">
+		<center><h2 class="tablaq_title"> Tabla Q </h2></center>
+		<div class="tabla" id="tabla">
+		    <div class="row">
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		    </div>
+
+		    <div class="row">
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		    </div>
+
+		    <div class="row">
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		      <div class="box">
+		        <div class="numero arriba">0</div>
+		        <div class="numero izquierda">0</div>
+		        <div class="numero derecha">0</div>
+		        <div class="numero abajo">0</div>
+		        <div class="box_style"></div>
+		        <div class="crossed"></div>
+		      </div>
+		    </div>
+	  	</div>
+	</div>
+	<div class="bloque_derecha">
+		<!-- <center><button onclick="server.avanzar()">Avanzar</button></center>
+		<center><button id="entrenar" onclick='server.entrenar()'>Entrenar</button></center>
+		<center><button id="detener" style="display: none" onclick='server.detener()' class="deshabilitado">Detener</button></center> -->
+	  <div class="botones">
+		  <center><button id=Avanzar class="zoom_button button avanzar_button" onclick='server.avanzar()'>Avanzar</button></center>
+		  <center><button id=No_Avanzar class="deshabilitado hidden button no_avanzar_button">Avanzar</button></center>
+		  <center><button id=Detener class="zoom_button hidden button detener_button" onclick='server.detener()'>Detener</button></center>
+		  <center><button id=Entrenar class="zoom_button button entrenar_button" onclick='server.entrenar()'>Entrenar</button></center>
+		  <center><button id=No_Entrenar class="deshabilitado hidden button no_entrenar_button">Entrenar</button></center>
+		  <center><button id=Finalizar class="zoom_button hidden button finalizar_button" onclick='server.detener()'>Detener</button></center>
+		  <center><button id=Reset class="zoom_button button finalizar_button" onclick='server.reset_table()'>Resetear</button></center>
+
+		</div>
+		<div class="bloque_derecha_inferior">
+	    <!-- <div class="estado"> -->
+	      <h3 id="Estado">Estado: Detenido</h3>
+	    <!-- </div> -->
+	  </div>
+	</div>
+{% endblock %}
+
+{% block js_imports %}
+	<script src="{{ url_for('static', filename = 'js/layout.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/effects.js') }}"> </script>
+	<script> update_table({{ data.q_table }}) </script>
+{% endblock %}
