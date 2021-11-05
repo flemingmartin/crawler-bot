@@ -83,7 +83,7 @@ h3 {
 	width: 50%;
 	float:  right;
 	box-sizing: border-box;
-	margin-top: 10%;
+	margin-top: 8%;
 }
 
 .bloque_derecha_inferior{
@@ -106,6 +106,7 @@ h3 {
 }
 
 .letra-blanca{
+	margin-top: 10%;
 	color: white;
 }
 

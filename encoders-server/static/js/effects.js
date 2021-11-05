@@ -4,6 +4,8 @@ $(function(){
     $('#Detener').show();
     $('#Entrenar').hide();
     $('#No_Entrenar').show();
+    $('#Reset').hide();
+    $('#No_Reset').show();
     var contenido = document.getElementById("Estado").innerText = "Estado: Avanzando";
   });
   $('#Detener').click(function(){
@@ -11,6 +13,8 @@ $(function(){
     $('#Avanzar').show();
     $('#No_Entrenar').hide();
     $('#Entrenar').show();
+    $('#No_Reset').hide();
+    $('#Reset').show();
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
   });
   $('#Entrenar').click(function(){
@@ -18,6 +22,8 @@ $(function(){
     $('#Finalizar').show();
     $('#Avanzar').hide();
     $('#No_Avanzar').show();
+    $('#Reset').hide();
+    $('#No_Reset').show();
     var contenido = document.getElementById("Estado").innerText = "Estado: Entrenando";
   });
   $('#Finalizar').click(function(){
@@ -25,6 +31,8 @@ $(function(){
     $('#Entrenar').show();
     $('#No_Avanzar').hide();
     $('#Avanzar').show();
+    $('#No_Reset').hide();
+    $('#Reset').show();
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
   });
 })
