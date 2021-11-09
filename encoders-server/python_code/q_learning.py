@@ -21,15 +21,15 @@ class QLearning():
 		self.EPSILON = 0.9				# Factor de aleatoriedad del modelo
 		self.LEARNING_EPSILON = 0.002 	# Descuento de aleatoriedad
 		self.MIN_EPSILON = 0.15			# Minima aleatoriedad
-		self.MAX_MOVEMENTS = 15			# Maximos movimientos del brazo sin obtener recompenza
+		self.MAX_MOVEMENTS = 15			# Maximos movimientos del brazo sin obtener recompensa
 		self.ACTIONS = 4 				# Número de acciones posibles
 		self.STATE_SIZE = (3,3)			# Cantidad de estados posibles
 		
-		# Posibles recompenzas del entrenamiento
-		self.WIN_REWARD = 4				# Recompenza obtenida al avanzar
-		self.LOSS_REWARD = -4			# Recompenza obtenida al retroceder
-		self.DEAD_REWARD = -4			# Recompenza obtenida al realizar un movimiento no permitido
-		self.LOOP_REWARD = -4			# Recompenza obtenida al realizar movimientos reiterados sin obtener recompenza
+		# Posibles recompensas del entrenamiento
+		self.WIN_REWARD = 4				# Recompensa obtenida al avanzar
+		self.LOSS_REWARD = -4			# Recompensa obtenida al retroceder
+		self.DEAD_REWARD = -4			# Recompensa obtenida al realizar un movimiento no permitido
+		self.LOOP_REWARD = -4			# Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa
 
 
 		# Variable asociada a jyserver
@@ -89,7 +89,7 @@ class QLearning():
 					epsilon-=self.LEARNING_EPSILON
 
 				# Realizar la accion en el agente y recibir nuevo estado, 
-				# recompenza y si realizo movimiento no permitido
+				# recompensa y si realizo movimiento no permitido
 				new_state,reward,dead = self.robot.step(action)
 
 				# Incrementa la cantidad de movimientos
@@ -100,10 +100,10 @@ class QLearning():
 					movements = 0
 
 				# Si se realizaron el numero maximo de movimientos sin 
-				# obtener recompenza -> el robot se encuentra en un bucle
+				# obtener recompensa -> el robot se encuentra en un bucle
 				if movements == self.MAX_MOVEMENTS:
 					dead = True
-					reward = self.LOOP_REWARD # Asignar recompenza negativa
+					reward = self.LOOP_REWARD # Asignar recompensa negativa
 
 				
 				# Calculos relacionados a la ecuacion utilizada por el modelo QLearning
