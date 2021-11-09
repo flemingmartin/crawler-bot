@@ -23,6 +23,12 @@ class Robot():
 			Constructor de la clase Robot.
 			Determina las posibles posiciones, inicializa variables y crea el
 			administrador de entrada/salida si se ejecuta en Raspberry Pi
+
+			Parametros
+			----------
+				recompensa_avanzar: valor asignado a la recompensa al avanzar
+				recompensa_retroceder: valor asignado a la recompensa al retroceder
+				recompensa_dead: valor asignado a la recompensa al intentar hacer un movimiento incorrecto
 		'''
 		if _raspi: 
 			self.adminES = AdminES()
@@ -117,7 +123,7 @@ class Robot():
 
 	def iniciar_lectura(self):
 		'''
-			Incia el hilo encargado de la lectura de los encoders
+			Inicia el hilo encargado de la lectura de los encoders
 		'''
 		self.thread_encoders = StoppableThread(target = self.threading_function)
 		self.thread_encoders.start()
@@ -148,7 +154,7 @@ class Robot():
 
 	def calcular_avance(self, encoder):
 		'''
-			Establece si el robot ha realziado un movimiento hacia atras, hacia adelante o ninguno.
+			Establece si el robot ha realizado un movimiento hacia atras, hacia adelante o ninguno.
 			Utiliza el valor actual de los encoders y el almacenado anteriormente.
 
 			Parametros
