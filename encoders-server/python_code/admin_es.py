@@ -2,6 +2,12 @@ import time
 import pigpio
 
 class AdminES: 
+	'''
+		Clase encargada de la administración de los dispositivos de entrada y salida.
+		Cuenta con la configuración de los pines de encoders y servos, 
+		y uso de estos dispositivos mediante la librería pigpio.
+	'''
+
 	def __init__(self):
 		'''
 			Constructor de la clase AdminES
@@ -76,10 +82,7 @@ class AdminES:
 		'''
 			Posiciona al robot en estado de reposo
 		'''
-		# Posicionar en estado de reposo
 		self.mover_servo(self.pin_servo1, 10)
 		self.mover_servo(self.pin_servo2, 85)
 		self.pi.set_servo_pulsewidth(self.pin_servo1, 0) 
 		self.pi.set_servo_pulsewidth(self.pin_servo2, 0)
-		
-	#self.pi.stop() # terminate connection and release resources

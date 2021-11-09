@@ -1,8 +1,5 @@
+# Variable para determinar si se está ejecutando en una Raspberry o en PC. True para Raspberry
 _raspi = False
-
-import random 
-import time
-from python_code.stoppablethread import StoppableThread
 
 if _raspi: 
 	print("--- SISTEMA CARGADO EN UNA RASPI ---")
@@ -10,17 +7,42 @@ if _raspi:
 else:
 	print("--- SISTEMA CARGADO EN UNA PC ---")
 
+import random 
+import time
+from python_code.stoppablethread import StoppableThread
+
 
 class Robot():
-	def __init__(self):
+	'''
+		Clase que modela el agente robot.
+		Cuenta con métodos para la ejecución de acciones y administración de las recompensas.
+	'''
+
+	def __init__(self, recompensa_avanzar, recompensa_retroceder, recompensa_dead):
+		'''
+			Constructor de la clase Robot.
+			Determina las posibles posiciones, inicializa variables y crea el
+			administrador de entrada/salida si se ejecuta en Raspberry Pi
+		'''
 		if _raspi: 
 			self.adminES = AdminES()
 		self.angulos = [0,40,75]
 		self.encoders = self.lectura_encoders()
 		self.recompensa = 0
 		self.lectura_bloqueada = False
+		self.recompensa_avanzar = recompensa_avanzar
+		self.recompensa_retroceder = recompensa_retroceder
+		self.recompensa_dead = recompensa_dead
+
 
 	def reset(self):
+		'''
+			Metodo que sirve para el llevar al Robot al estado inicial [1,1]
+			
+			Devuelve
+			--------
+				El estado [1,1] como una tupla
+		'''
 		self.state = [1,1]
 		if _raspi:
 			self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
@@ -28,113 +50,143 @@ class Robot():
 		return tuple(self.state)
 
 	def step(self,action):
-		memori = False
+		'''
+			Metodo encargado de la ejecución de una acción y
+			devolución de parámetros útiles para el algoritmo Q-Learning
+			
+			Parámetros
+			----------
+				action: acción que debe realizar el robot
+			
+			Devuelve
+			--------
+				El estado [1,1] como una tupla
+				reward: recompensa obtenida
+				dead: True si el robot intentó hacer una acción incorrecta o False, en caso contrario
+		'''
+		dead = False
 
 		old_state = self.state.copy()
 
-		if action == 0:
+		if action == 0:				# Accion 0: mover hacia abajo la primera articulacion
 			if self.state[0]>0:
 				self.state[0]-=1
 			else:
-				memori = True
-		elif action == 1:
+				dead = True
+		elif action == 1:			# Accion 1: mover hacia arriba la primera articulacion
 			if self.state[0]<(len(self.angulos)-1):
 				self.state[0]+=1
 			else:
-				memori = True
-		elif action == 2:
+				dead = True
+		elif action == 2:			# Accion 2: mover hacia abajo la segunda articulacion
 			if self.state[1]>0:
 				self.state[1]-=1
 			else:
-				memori = True
-		elif action == 3:
+				dead = True
+		elif action == 3:			# Accion 3: mover hacia arriba la segunda articulacion
 			if self.state[1]<(len(self.angulos)-1):
 				self.state[1]+=1
 			else:
-				memori = True
+				dead = True
 
-		if not memori:
+		if not dead:				# Si no intentó ir a una posición incorrecta, realiza la accion
 			if action < 2:
-				# print("Mueve servo 0 a posicion " + str(self.angulos[self.state[0]]))
 				if _raspi:
 					self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
 			else:
-				# print("Mueve servo 1 a posicion " + str(self.angulos[self.state[1]]))
 				if _raspi:
 					self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
 
-		# reward = 0
-		#si hizo los movimientos pro LEER ENCODER Y VER SI AVANZÓ
-		#if avanzo:
-		#	reward = 1
-		
-		# if old_state == [0,1] and self.state == [0,2]:
-		# 	reward = 2
-
-		# #si me sali de la pantalla -> perdi
-		# if memori or (old_state == [0,2] and self.state == [0,1]):
-		# 	reward = -5
-
-		reward = self.recompensa
+		# Establece recompensa y la desbloquea para su actualización
+		reward = self.recompensa 
 		self.lectura_bloqueada = False
 
-		if memori: 
-			reward = -4
+		if dead: 
+			reward = self.recompensa_dead
 
-		return tuple(self.state), reward, memori
-
-	def get_state(self):
-		return tuple(self.state)
+		return tuple(self.state), reward, dead
 
 	def reposo(self):
+		'''
+			Metodo encargado de llevar al Robot al estado de reposo,
+			mediante la ejecución de adminES.reposo() si se ejecuta en Raspberry
+		'''
 		if _raspi:
 			self.adminES.reposo()
 		print("reposo")
 
 	def iniciar_lectura(self):
+		'''
+			Incia el hilo encargado de la lectura de los encoders
+		'''
 		self.thread_encoders = StoppableThread(target = self.threading_function)
 		self.thread_encoders.start()
 
 	def finalizar_lectura(self):
+		'''
+			Detiene el hilo encargado de la lectura de los encoders
+		'''
 		self.thread_encoders.stop()
 
 	def lectura_encoders(self):
+		'''
+			Realiza la lectura de los encoders si se ejecuta en Raspberry
+			o establece valores random para los encoders, en PC.
+
+			Devuelve
+			--------
+				encoders: array de dos posiciones con el valor de los encoders
+		'''
 		encoders = [1,1]
 		if _raspi:
 			encoders[0] = self.adminES.leer_encoder(self.adminES.pin_encoder1)
 			encoders[1] = self.adminES.leer_encoder(self.adminES.pin_encoder2)
 		else:
-			encoders[0] = int(random.randint(0, 3) == 0)
-			encoders[1] = int(random.randint(0, 3) == 0)
+			encoders[0] = int(random.randint(0, 4) == 0)
+			encoders[1] = int(random.randint(0, 4) == 0)
 		return encoders
 
 	def calcular_avance(self, encoder):
-		if encoder == [1,1]:  # El valor obtenido no es útil (ambos en cero)
-			self.encoders = [1,1]  # Descartar lectura anterior
+		'''
+			Establece si el robot ha realziado un movimiento hacia atras, hacia adelante o ninguno.
+			Utiliza el valor actual de los encoders y el almacenado anteriormente.
+
+			Parametros
+			----------
+				encoder: valor actual de los encoders
+
+			Devuelve
+			--------
+				0 -> Su no hubo cambio
+				self.recompensa avanzar -> si avanzó
+				self.recompensa_retroceder -> si retrocedió
+		'''
+		if encoder == [1,1]:  							# El valor obtenido no es útil (ambos en cero)
+			self.encoders = [1,1]  						# Descartar lectura anterior
 		else:
-			if self.encoders == [1,1]:  # El valor almacenado no es útil (ambos en cero)
-				self.encoders == encoder  # Sólo actualizar el nuevo valor de los encoders
-			else:  # El nuevo valor y el valor almacenado son ambos diferentes de [1,1]
-				if encoder[0] > self.encoders[0]:  # El encoder 0 pasó de 0 a 1
-					self.encoders == encoder  # Actualizar el nuevo valor de los encoders
-					self.lectura_bloqueada = True  # Bloquea el movimiento detectado hasta que sea leído
-					print("avance")
-					return 1  # El movimiento es hacia adelante
-				if encoder[1] > self.encoders[1]:  # El encoder 1 pasó de 0 a 1
-					self.encoders == encoder  # Actualizar el nuevo valor de los encoders
-					self.lectura_bloqueada = True  # Bloquea el movimiento detectado hasta que sea leído
-					print("retrocedi")
-					return -1  # El movimiento es hacia atrás
-		# if not self.lectura_bloqueada:
-		# 	return 0  # el robot no se movió desde la última lectura de movimiento detectado
+			if self.encoders == [1,1]:  				# El valor almacenado no es útil (ambos en cero)
+				self.encoders == encoder  				# Sólo actualizar el nuevo valor de los encoders
+			else:  										# El nuevo valor y el valor almacenado son ambos diferentes de [1,1]
+				if encoder[0] > self.encoders[0]:  		# El encoder 0 pasó de 0 a 1
+					self.encoders == encoder  			# Actualizar el nuevo valor de los encoders
+					self.lectura_bloqueada = True  		# Bloquea el movimiento detectado hasta que sea leído
+					# print("avance")
+					return self.recompensa_avanzar		# El movimiento es hacia adelante
+				if encoder[1] > self.encoders[1]:  		# El encoder 1 pasó de 0 a 1
+					self.encoders == encoder  			# Actualizar el nuevo valor de los encoders
+					self.lectura_bloqueada = True  		# Bloquea el movimiento detectado hasta que sea leído
+					# print("retrocedi")
+					return self.recompensa_retroceder	# El movimiento es hacia atrás
 		return 0
 
-
 	def threading_function(self):
-		print("HILO Y STITCH")
+		'''
+			Función ejecutada por el StoppableThread.
+			Si aun no se ha detenido el hilo, lee los encoders.
+			Y luego si la variable recompensa no está bloqueada, la actualiza.
+		'''
 		while not self.thread_encoders.stopped():
 			encoders = self.lectura_encoders()
 			if not self.lectura_bloqueada:
-				self.recompensa = self.calcular_avance(encoders) * 4
+				self.recompensa = self.calcular_avance(encoders)
 			self.encoders = encoders
-			# time.sleep(0.1)
