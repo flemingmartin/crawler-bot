@@ -3,16 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 import jyserver.Flask as jsf
 import numpy as np
 import time
-
+  
+from python_code.q_learning import QLearning
 from python_code.robot import _raspi
 
-if _raspi:
-	from python_code.admin_es import AdminES
-	adminES = AdminES()
+# Si se está ejecutando en una Raspi, 
+# determinar si es en producción (False - mediante Access Point)
+# o desarrollo (True - mediante cable ethernet)
+if _raspi: 
 	_dev = False
 
-from python_code.q_learning import QLearning
-
+# Creación de la aplicación Flask y establecimiento de la base de datos 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./crawler-database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -21,6 +22,10 @@ db.init_app(app)
 db.create_all()
 
 class QTable(db.Model):
+	'''
+		Modelo de la base de datos que establece una tabla de SQL
+		donde estarán almacenadas las tablas Q entrenadas.
+	'''
 	__tablename__ = 'qtable'
 
 	id = db.Column(db.Integer, primary_key=True)
@@ -32,75 +37,88 @@ class QTable(db.Model):
 
 @jsf.use(app)
 class App:
-	def __init__(self):
-		self.Q = QLearning(self)
+	'''
+		Clase que modela la aplicación Flask para su utilización con jyserver.
+		Establece los metodos que pueden ser ejecutados a partir de eventos 
+		producidos en la interfaz web como si de javascript se tratara. 
+		De igual manera, permite la ejecución de las funciones de javascript 
+		creadas, accediendo mediante self.js. 
+	'''
 
+	def __init__(self):
+		'''
+			Constructor de la clase App.
+			Almacena una instancia de la clase QLearning y carga una tabla Q
+			desde la base de datos para almacenarla como tabla inicial.
+		'''
+		self.Q = QLearning(self)
+		
 		database = QTable.query.all() 
 		q_table =(database[-1].q_table)
 		self.Q.inicializar_q_table(q_table)
-		# self.js.update_table(list(q_table.flatten()))
 	
+
 	def entrenar(self):
+		'''
+			Función que inicia el entrenamiento y guarda la tabla Q que ha 
+			sido generada tras la ejecución del mismo, en la base de datos.
+		'''
 		self.Q.done=False
-
-		# self.Q.inicializar_q_table()
 		q_table = self.Q.entrenar()
-		# q_table = np.zeros((3,3,4)) # para poner una tabla vacia
-
+		
 		entrada_db = QTable(q_table=q_table)
 		db.session.add(entrada_db)
 		db.session.commit()
 
-		# time.sleep(0.5)
-		# self.js.location.reload()
-
-	def reset_table(self):
-		self.Q.inicializar_q_table()
-		self.js.update_table(list(self.Q.q_table.flatten()))
-		
-
-	def detener(self):
-		self.Q.done=True
-		self.js.console.log("listorti")
 
 	def avanzar(self):
+		'''
+			Función que inicia el movimiento del robot utilizando la tabla
+			que se encuentra almacenada en la variable Q. Que puede ser una
+			recientemente entrenada o la cargada inicialmente desde la BD. 
+		'''
 		self.Q.done=False
 		self.Q.avanzar()
 
+
+	def detener(self):
+		'''
+			Detener la ejecución del entrenamiento o del movimiento segun corresponda.
+		'''
+		self.Q.done=True
+
+
+	def reset_table(self):
+		'''
+			Función que resetea toda la tabla a 0 en Q y la actualiza en la interfaz.
+		'''
+		self.Q.inicializar_q_table()
+		q_table = self.Q.q_table
+		self.js.update_table(list(q_table.flatten()))
+
+
 @app.route('/')
 def index():
-	# Creación de una tabla Q vacía - Solo para la primera, a investigar
-	# ACTIONS = 4
-	# STATE_SIZE = (3,3)	
-	# q_table = np.zeros(shape=(STATE_SIZE + (ACTIONS,)))
-	# db.create_all()
-	# database = QTable(q_table=q_table)
-	# db.session.add(database)
-	# db.session.commit()
+	'''
+		Metodo correspondiente a la ruta "/" de la web.
+		Se carga una entrada de la tabla para ser mostrada en la interfaz,
+		además se pasan algunos parámetros a la vista. 
+	'''
 
 	database = QTable.query.all() 
 	q_table =(database[-1].q_table)
-
-	# Parámetros a ser enviados al template index
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',
 		'q_table': list(q_table.flatten())
 	}
-	# dola = App.render(render_template('index.html', data=data))
-	# App.js.update_table(list(q_table.flatten()))
 	return App.render(render_template('index.html', data=data))
 
 
-# @app.route('/caminar')
-# def caminar():
-# 	# Realizar un paso y redireccionar a index
-# 	# adminES.avanzar()
-# # Agregar en la vista: <center><button href="{{url_for('caminar')}}">Avanzar</button></center>
-# 	return redirect(url_for('index'))
-
 def pagina_no_encontrada(error):
-	# Función que muestra el cartel de error 404
+	'''
+		Función que muestra el cartel de error 404
+	'''
 	data = {
 		'titulo': 'Error 404!'
 	}
@@ -108,14 +126,17 @@ def pagina_no_encontrada(error):
 
 
 if __name__=='__main__':
+	'''
+		Programa principal
+	'''
 	app.register_error_handler(404, pagina_no_encontrada)
 	if _raspi:
 		if _dev:
-			print("Red local mediante ethernet")
+			print(" * Red local mediante ethernet")
 			app.run(host='0.0.0.0', port=5000)     # Para red local mediante ethernet
 		else:
-			print("Access point")
+			print(" * Access point")
 			app.run(host='192.168.4.1', port=5000)  # Cuando está como access point
 	else:
-		print("Run PC - Debug")
-		app.run(debug=True)  # Cuando está en la compu
+		print(" * Run PC - Debug")
+		app.run(debug=True)  # Cuando está ejecutandose en PC
