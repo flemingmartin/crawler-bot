@@ -36,3 +36,20 @@ $(function(){
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
   });
 })
+
+// OTRA ALTERNATIVA 
+function estado_avanzando(){
+  
+}
+
+function estado_detenido_entrenar(){
+  
+}
+
+function estado_entrenando(){
+  
+}
+
+function estado_detenido_finalizar(){
+  
+}

@@ -31,12 +31,14 @@ def contacto(nombre, edad):
 	}
 	return render_template('contact.html', data=data)
 
+@app.route('/query_string')
 def query_string():
 	print(request)
 	print(request.args)
-	print(request.args.get('param1'))
+	param1 = request.args.get('param1')
+	print(param1)
 	print(request.args.get('param2'))
-	return "Ok"
+	return f"Ok {param1}"
 
 def pagina_no_encontrada(error):
 	data = {
@@ -46,7 +48,7 @@ def pagina_no_encontrada(error):
 	#return redirect(url_for('index'))
 
 if __name__=='__main__':
-	app.add_url_rule('/query_string', view_func=query_string)
+	# app.add_url_rule('/query_string', view_func=query_string)
 	app.register_error_handler(404, pagina_no_encontrada)
 	#app.run(debug=True, port=8888)
 	#app.run(host='192.168.1.38', port=8888)

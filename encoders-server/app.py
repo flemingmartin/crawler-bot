@@ -19,7 +19,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./crawler-database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 db.init_app(app)
-db.create_all()
+# db.create_all()
+
+# if not "qtable" in db.inspect(db.engine).get_table_names():
+# 	db.create_all()
 
 class QTable(db.Model):
 	'''
@@ -52,17 +55,28 @@ class App:
 			desde la base de datos para almacenarla como tabla inicial.
 		'''
 		self.Q = QLearning(self)
-		
-		database = QTable.query.all() 
-		q_table =(database[-1].q_table)
-		self.Q.inicializar_q_table(q_table)
-	
+				
+		if "qtable" in db.inspect(db.engine).get_table_names():
+			database = QTable.query.all()
+			# print(database)
+
+			if  not database == []:
+				q_table =(database[-1].q_table)
+				self.Q.inicializar_q_table(q_table)	
+			else:
+				self.Q.inicializar_q_table()
+		else:
+			db.create_all()
+			self.Q.inicializar_q_table()
 
 	def entrenar(self):
 		'''
 			Función que inicia el entrenamiento y guarda la tabla Q que ha 
 			sido generada tras la ejecución del mismo, en la base de datos.
 		'''
+		self.js.estado_entrenando()
+		self.iniciado = 1
+
 		self.Q.done=False
 		q_table = self.Q.entrenar()
 		
@@ -77,6 +91,9 @@ class App:
 			que se encuentra almacenada en la variable Q. Que puede ser una
 			recientemente entrenada o la cargada inicialmente desde la BD. 
 		'''
+		self.js.estado_avanzando()
+		self.iniciado = 2
+
 		self.Q.done=False
 		self.Q.avanzar()
 
@@ -85,6 +102,10 @@ class App:
 		'''
 			Detener la ejecución del entrenamiento o del movimiento segun corresponda.
 		'''
+		if self.iniciado == 1:
+			self.js.estado_detenido_entrenar()
+		elif self.iniciado == 2:
+			self.js.estado_detenido_finalizar()
 		self.Q.done=True
 
 
@@ -105,8 +126,7 @@ def index():
 		además se pasan algunos parámetros a la vista. 
 	'''
 
-	database = QTable.query.all() 
-	q_table =(database[-1].q_table)
+	q_table = App.Q.q_table
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',

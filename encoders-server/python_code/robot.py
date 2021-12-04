@@ -10,7 +10,7 @@ else:
 import random 
 import time
 from python_code.stoppablethread import StoppableThread
-
+from threading import Semaphore
 
 class Robot():
 	'''
@@ -39,6 +39,8 @@ class Robot():
 		self.recompensa_avanzar = recompensa_avanzar
 		self.recompensa_retroceder = recompensa_retroceder
 		self.recompensa_dead = recompensa_dead
+		self.semaforo_recompensa = Semaphore(1)
+		self.semaforo_flag_bloqueo = Semaphore(1)
 
 
 	def reset(self):
@@ -104,8 +106,13 @@ class Robot():
 					self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
 
 		# Establece recompensa y la desbloquea para su actualización
-		reward = self.recompensa 
+		self.semaforo_recompensa.acquire()
+		reward = self.recompensa
+		self.semaforo_recompensa.release()
+
+		self.semaforo_flag_bloqueo.acquire()
 		self.lectura_bloqueada = False
+		self.semaforo_flag_bloqueo.release()
 
 		if dead: 
 			reward = self.recompensa_dead
@@ -175,12 +182,19 @@ class Robot():
 			else:  										# El nuevo valor y el valor almacenado son ambos diferentes de [1,1]
 				if encoder[0] > self.encoders[0]:  		# El encoder 0 pasó de 0 a 1
 					self.encoders == encoder  			# Actualizar el nuevo valor de los encoders
+					
+					self.semaforo_flag_bloqueo.acquire()
 					self.lectura_bloqueada = True  		# Bloquea el movimiento detectado hasta que sea leído
+					self.semaforo_flag_bloqueo.release()
+					
 					# print("avance")
 					return self.recompensa_avanzar		# El movimiento es hacia adelante
 				if encoder[1] > self.encoders[1]:  		# El encoder 1 pasó de 0 a 1
 					self.encoders == encoder  			# Actualizar el nuevo valor de los encoders
+					
+					self.semaforo_flag_bloqueo.acquire()
 					self.lectura_bloqueada = True  		# Bloquea el movimiento detectado hasta que sea leído
+					self.semaforo_flag_bloqueo.release()
 					# print("retrocedi")
 					return self.recompensa_retroceder	# El movimiento es hacia atrás
 		return 0
@@ -193,6 +207,16 @@ class Robot():
 		'''
 		while not self.thread_encoders.stopped():
 			encoders = self.lectura_encoders()
+
+			self.semaforo_flag_bloqueo.acquire()
 			if not self.lectura_bloqueada:
-				self.recompensa = self.calcular_avance(encoders)
+				self.semaforo_flag_bloqueo.release()
+
+				recompensa = self.calcular_avance(encoders)
+				
+				self.semaforo_recompensa.acquire()
+				self.recompensa = recompensa
+				self.semaforo_recompensa.release()
+			else:
+				self.semaforo_flag_bloqueo.release()				
 			self.encoders = encoders

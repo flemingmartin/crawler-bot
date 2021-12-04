@@ -31,14 +31,12 @@ class QLearning():
 		self.DEAD_REWARD = -4			# Recompensa obtenida al realizar un movimiento no permitido
 		self.LOOP_REWARD = -4			# Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa
 
-
 		# Variable asociada a jyserver
 		self.app = app
 
-		# Instancia del agente Robot
+		# Instancia del Robot
 		self.robot = Robot(self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD)
 		
-
 
 	def inicializar_q_table(self, q_table = None):
 		'''
@@ -54,6 +52,7 @@ class QLearning():
 			assert q_table.shape == (self.STATE_SIZE + (self.ACTIONS,)) # Verificar que el tamaño de la tabla es correcto
 			self.q_table = q_table
 
+
 	def entrenar(self):
 		'''
 			Función que se encarga de realizar la lógica de entrenamiento
@@ -67,11 +66,12 @@ class QLearning():
 		epsilon = self.EPSILON
 		self.robot.iniciar_lectura()
 
+		# Obtener del agente el estado inicial
+		state = self.robot.reset()
+
 		# Bucle principal de entrenamiento
 		while not self.done:
-			# Obtener del agente el estado inicial
-			state = self.robot.reset()
-
+			# Antes estaba el reset acá 
 			dead = False	# Variable que indica si el robot realizó un movimiento no permitido
 			movements = 0 	# Variable que indica la cantidad de movimientos realizados por el robot
 
@@ -132,6 +132,7 @@ class QLearning():
 
 		# Retornar la tabla aprendida
 		return self.q_table
+
 
 	def avanzar(self):
 		'''
