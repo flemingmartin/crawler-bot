@@ -19,10 +19,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./crawler-database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 db.init_app(app)
-# db.create_all()
 
+# db.create_all()
 # if not "qtable" in db.inspect(db.engine).get_table_names():
-# 	db.create_all()
+# db.create_all()
 
 class QTable(db.Model):
 	'''
@@ -55,19 +55,30 @@ class App:
 			desde la base de datos para almacenarla como tabla inicial.
 		'''
 		self.Q = QLearning(self)
-				
-		if "qtable" in db.inspect(db.engine).get_table_names():
-			database = QTable.query.all()
-			# print(database)
 
-			if  not database == []:
-				q_table =(database[-1].q_table)
+		if "qtable" in db.inspect(db.engine).get_table_names(): # Si la tabla existe en la base de datos
+			database = QTable.query.all()
+
+			if  not database == []: # Si existe y tiene elementos, toma el último
+				self.entrada_db = database[-1]
+				q_table = self.entrada_db.q_table
 				self.Q.inicializar_q_table(q_table)	
-			else:
+
+			else: 					# Si existe pero se encuentra vacía, crea una entrada nueva
 				self.Q.inicializar_q_table()
-		else:
+
+				print(q_table)
+				self.entrada_db = QTable(q_table=self.Q.q_table)
+				db.session.add(self.entrada_db)
+				db.session.commit()
+
+		else:						# Si la tabla no existe en la base de datos
 			db.create_all()
 			self.Q.inicializar_q_table()
+
+			self.entrada_db = QTable(q_table=self.Q.q_table)
+			db.session.add(self.entrada_db)
+			db.session.commit()
 
 	def entrenar(self):
 		'''
@@ -80,8 +91,7 @@ class App:
 		self.Q.done=False
 		q_table = self.Q.entrenar()
 		
-		entrada_db = QTable(q_table=q_table)
-		db.session.add(entrada_db)
+		self.entrada_db.query.update({"q_table" : q_table})
 		db.session.commit()
 
 
@@ -115,6 +125,10 @@ class App:
 		'''
 		self.Q.inicializar_q_table()
 		q_table = self.Q.q_table
+
+		self.entrada_db.query.update({"q_table" : q_table})
+		db.session.commit()
+
 		self.js.update_table(list(q_table.flatten()))
 
 
