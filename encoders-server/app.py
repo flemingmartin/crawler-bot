@@ -113,9 +113,9 @@ class App:
 			Detener la ejecución del entrenamiento o del movimiento segun corresponda.
 		'''
 		if self.iniciado == 1:
-			self.js.estado_detenido_entrenar()
-		elif self.iniciado == 2:
 			self.js.estado_detenido_finalizar()
+		elif self.iniciado == 2:
+			self.js.estado_detenido_entrenar()
 		self.Q.done=True
 
 
@@ -139,7 +139,6 @@ def index():
 		Se carga una entrada de la tabla para ser mostrada en la interfaz,
 		además se pasan algunos parámetros a la vista. 
 	'''
-
 	q_table = App.Q.q_table
 	data={
 		'titulo': 'Crawler Server',

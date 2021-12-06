@@ -39,17 +39,60 @@ $(function(){
 
 // OTRA ALTERNATIVA 
 function estado_avanzando(){
-  
+  // $('#Avanzar').hide();
+  // $('#No_Avanzar').hide();
+  // $('#Detener').show();
+
+  // $('#Entrenar').hide();
+  // $('#No_Entrenar').show();
+  // $('#Finalizar').hide();
+
+  // $('#Reset').hide();
+  // $('#No_Reset').show();
+
+  // var contenido = document.getElementById("Estado").innerText = "Estado: Avanzando";
 }
 
 function estado_detenido_entrenar(){
-  
+  // $('#Avanzar').show();
+  // $('#No_Avanzar').hide();
+  // $('#Detener').hide();
+
+  // $('#Entrenar').show();
+  // $('#No_Entrenar').hide();
+  // $('#Finalizar').hide();
+
+  // $('#Reset').show();
+  // $('#No_Reset').hide();
+
+  // var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
 }
 
 function estado_entrenando(){
-  
+  // $('#Avanzar').hide();
+  // $('#No_Avanzar').show();
+  // $('#Detener').hide();
+
+  // $('#Entrenar').hide();
+  // $('#No_Entrenar').hide();
+  // $('#Finalizar').show();
+
+  // $('#Reset').hide();
+  // $('#No_Reset').show();
+
+  // var contenido = document.getElementById("Estado").innerText = "Estado: Entrenando";
 }
 
 function estado_detenido_finalizar(){
-  
+  // $('#Avanzar').show();
+  // $('#No_Avanzar').hide();
+  // $('#Detener').hide();
+
+  // $('#Entrenar').show();
+  // $('#No_Entrenar').hide();
+  // $('#Finalizar').hide();
+
+  // $('#Reset').show();
+  // $('#No_Reset').hide();
+  // var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
 }
