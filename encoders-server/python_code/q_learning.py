@@ -16,14 +16,15 @@ class QLearning():
 		'''
 		# Variables relacionadas al entrenamiento 
 		self.done = False				# Indica si finalizo el entrenamiento
+		self.ACTIONS = 4 				# Número de acciones posibles
+		self.STATE_SIZE = (3,3)			# Cantidad de estados posibles
+
 		self.LEARNING_RATE = 0.4		# Tasa de aprendizaje del modelo
 		self.DISCOUNT = 0.9				# Factor de descuento de recompensas futuras
 		self.EPSILON = 0.9				# Factor de aleatoriedad del modelo
 		self.LEARNING_EPSILON = 0.002 	# Descuento de aleatoriedad
 		self.MIN_EPSILON = 0.15			# Minima aleatoriedad
 		self.MAX_MOVEMENTS = 15			# Maximos movimientos del brazo sin obtener recompensa
-		self.ACTIONS = 4 				# Número de acciones posibles
-		self.STATE_SIZE = (3,3)			# Cantidad de estados posibles
 		
 		# Posibles recompensas del entrenamiento
 		self.WIN_REWARD = 4				# Recompensa obtenida al avanzar
@@ -37,7 +38,24 @@ class QLearning():
 		# Instancia del Robot
 		self.robot = Robot(self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD)
 		
+	def set_params(self,learning_rate,discount,epsilon,learning_epsilon,min_epsilon,max_movements,win_reward,loss_reward,dead_reward,loop_reward):
+		self.LEARNING_RATE = learning_rate			# Tasa de aprendizaje del modelo					
+		self.DISCOUNT = discount					# Factor de descuento de recompensas futuras	
+		self.EPSILON = epsilon						# Factor de aleatoriedad del modelo
+		self.LEARNING_EPSILON = learning_epsilon	# Descuento de aleatoriedad					
+		self.MIN_EPSILON = min_epsilon				# Minima aleatoriedad		
+		self.MAX_MOVEMENTS =max_movements			# Maximos movimientos del brazo sin obtener recompensa			
+		self.WIN_REWARD = win_reward				# Recompensa obtenida al avanzar		
+		self.LOSS_REWARD = loss_reward				# Recompensa obtenida al retroceder		
+		self.DEAD_REWARD = dead_reward				# Recompensa obtenida al realizar un movimiento no permitido		
+		self.LOOP_REWARD = loop_reward				# Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa		
 
+	def set_default_params(self):
+		self.set_params(0.4,0.9,0.9,0.002,0.15,15,4,-4,-4,-4)
+
+	def get_params(self):
+		return [self.LEARNING_RATE,self.DISCOUNT,self.EPSILON,self.LEARNING_EPSILON,self.MIN_EPSILON,self.MAX_MOVEMENTS,self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD,self.LOOP_REWARD]
+	
 	def inicializar_q_table(self, q_table = None):
 		'''
 			Inicializador de la tabla Q

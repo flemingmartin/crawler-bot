@@ -1,0 +1,19 @@
+{% macro show_input(label,name,step,min,max,value,descript) %}
+	
+	<div class="input">
+		<label>{{label}}</label>
+		<span class="input-number-decrement">–</span>
+		<input id="{{name}}" class="input-number" type="number" value={{value}} min={{min}} max={{max}} name="{{name}}" step="{{step}}">
+		<span class="input-number-increment">+</span>
+
+		<div class="info">
+			<img src="static/images/info.png" class="info_icon">
+			<div class="info_text">
+				{{label}}
+				<br><br>
+				{{descript}}
+			</div>
+		</div>
+	</div>
+
+{% endmacro %}

@@ -3,10 +3,46 @@
 {% block title %} {{ data.titulo }} {% endblock %}
 
 {% block body %}
-	<center><h1>{{ data.bienvenida }} <img src="static/images/Logo.png" style="vertical-align: bottom; width: 4%;"></h1></center>
-	<!-- <center><h1>Contador: {{ data.contador }}</h1></center> -->
-	<div class="contenedor_flex">
-		<div class="bloque_izquierda inflex">
+	<div class="header">
+		<h1>{{ data.bienvenida }} </h1>
+		<img src="static/images/Logo.png" class="logo">
+		<img src="static/images/menu.png" class="menu_button" id="abrir_menu"></img>
+	</div>
+
+	<div id="menu" class="hidden">
+		<div class="menu_header">
+			<img src="static/images/menu.png" class="menu_button" id="cerrar_menu"></img>
+			<h2>Configuraciones</h2>
+		</div>
+
+		<div class="cuerpo">
+			<form method="POST">
+
+				{% from "_input_number.html" import show_input %}
+
+				<!-- 			Label Name			Input Name 		  Step  Min  Max     Value	 -->
+				{{ show_input("Learning Rate",    "learning_rate",      0.1,   0,   2, data.config[0], "Indica la tasa de aprendizaje del modelo. Valor por defecto: 0.4") }}
+				{{ show_input("Discount Factor",  "discount_factor",    0.1,   0,   2, data.config[1], "Factor de descuento. Valor por defecto: 0.9") }}
+				{{ show_input("Epsilon", 		  "epsilon", 		    0.1,   0,   1, data.config[2], "Factor de aleatoriedad. Valor por defecto: 0.9") }}
+				{{ show_input("Learning Epsilon", "learning_epsilon", 0.001,   0, 0.9, data.config[3], "Tasa de descuento del factor de aleatoriedad. Valor por defecto: 0.002") }}
+				{{ show_input("Min Epsilon", 	  "min_epsilon", 	   0.01,   0, 0.9, data.config[4], "Valor mínimo de aleatoriedad del modelo. Valor por defecto: 0.15") }}
+				{{ show_input("Max Movements", 	  "max_movements", 	      1,  10, 100, data.config[5], "Maximos movimientos del brazo sin obtener recompensa. Valor por defecto: 15") }}
+				<br>
+				{{ show_input("Win Reward",  	  "win_reward",  	      1, -50,  50, data.config[6], "Recompensa obtenida al avanzar. Valor por defecto: 4") }}
+				{{ show_input("Loss Reward", 	  "loss_reward", 	      1, -50,  50, data.config[7], "Recompensa obtenida al retroceder. Valor por defecto: -4") }}
+				{{ show_input("Dead Reward", 	  "dead_reward", 	      1, -50,  50, data.config[8], "Recompensa obtenida al realizar un movimiento no permitido. Valor por defecto: -4") }}
+				{{ show_input("Loop Reward", 	  "loop_reward", 	      1, -50,  50, data.config[9], "Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa. Valor por defecto: -4") }}
+
+				<input type="submit" value="Aplicar" class="submit" name="aplicar">
+				<input type="submit" value="Resetear" class="submit" name="reset">
+			</form>
+		</div>
+	</div>
+
+
+
+	<div id="pagina" class="main_div">
+		<div class="bloque_izquierda">			
 			<h2 class="tablaq_title"> Tabla Q </h2>
 			<div class="tabla" id="tabla">
 				{% for _ in range(3) %}
@@ -25,39 +61,54 @@
 			    {% endfor %}
 		  	</div>
 		</div>
-		<div class="bloque_derecha inflex">
-			<!-- <center><button onclick="server.avanzar()">Avanzar</button></center>
-			<center><button id="entrenar" onclick='server.entrenar()'>Entrenar</button></center>
-			<center><button id="detener" style="display: none" onclick='server.detener()' class="deshabilitado">Detener</button></center> -->
-			<div class="bloque_derecha_inferior">
-		    <!-- <div class="estado"> -->
-		    	<h3 id="Estado">Estado: Detenido</h3>
-		    <!-- </div> -->
+		
+		<div class="bloque_derecha">
+			<div class="bloque_derecha_superior">
+		      <h3 id="Estado">Estado: Detenido</h3>
 		  	</div>
-		  	<div class="botones">
-				<center><button id=Avanzar class="zoom_button button avanzar_button" onclick='server.avanzar()'>Avanzar</button></center>
-				<center><button id=No_Avanzar class="deshabilitado hidden button">Avanzar</button></center>
-				<center><button id=Detener class="zoom_button hidden button detener_button" onclick='server.detener()'>Detener</button></center>
-
-				<center><button id=Entrenar class="zoom_button button entrenar_button" onclick='server.entrenar()'>Entrenar</button></center>
-				<center><button id=No_Entrenar class="deshabilitado hidden button">Entrenar</button></center>
-				<center><button id=Finalizar class="zoom_button hidden button finalizar_button" onclick='server.detener()'>Detener</button></center>
-
-				<center><button id=Reset class="zoom_button button finalizar_button" onclick='server.reset_table()'>Resetear</button></center>
-				<center><button id=No_Reset class="deshabilitado hidden button">Resetear</button></center>
+		  	
+			<div class="botones">
+				<button id=Avanzar class="zoom_button button avanzar_button" onclick='server.avanzar()'>Avanzar</button>
+				<button id=No_Avanzar class="deshabilitado hidden button">Avanzar</button>
+				<button id=Detener class="zoom_button hidden button detener_button" onclick='server.detener()'>Detener</button>
+				
+				<button id=Entrenar class="zoom_button button entrenar_button" onclick='server.entrenar({{data.contador}})'>Entrenar</button>
+				<button id=No_Entrenar class="deshabilitado hidden button">Entrenar</button>
+				<button id=Finalizar class="zoom_button hidden button finalizar_button" onclick='server.detener()'>Detener</button>
+				
+				<button id=Reset class="zoom_button button finalizar_button" onclick='server.reset_table()'>Resetear</button>
+				<button id=No_Reset class="deshabilitado hidden button">Resetear</button>
 			</div>
+			
+		</div>
+
+
+		<div class="animateme">
+		  <ul class="bg-bubbles">
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		  </ul>
 		</div>
 	</div>
+
+	<!-- <center style="padding-bottom:2em"><h1 id="llave">{{data.contador}}</h1></center> -->
 {% endblock %}
 
 {% block js_imports %}
+	<script src="{{ url_for('static', filename = 'js/input_number.js') }}"> </script>
 	<script src="{{ url_for('static', filename = 'js/layout.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/effects.js') }}"> </script>
-	<script> 
-		// window.sessionStorage.setItem('tab', {{ data.contador }})
-		// llave = {{data.llave}}
-		numero = {{data.contador}}
-	</script>
 	<script> update_table({{ data.q_table }}) </script>
 {% endblock %}

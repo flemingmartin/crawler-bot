@@ -20,15 +20,3 @@ function update_table(new_weights){
 		}
 	}
 }
-
-numero = 0
-
-// llave = 0
-
-function get_numero(){
-	return numero;
-}
-
-// function get_llave(){
-// 	return llave;
-// }

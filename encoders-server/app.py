@@ -83,32 +83,14 @@ class App:
 			Función que inicia el entrenamiento y guarda la tabla Q que ha 
 			sido generada tras la ejecución del mismo, en la base de datos.
 		'''
-		# llave1 = str(self.llave)
-		# llave2 = str(self.js.get_llave())
-		# # llave2 = str(self.js.window.sessionStorage.getItem('tab'))
+		self.js.estado_entrenando()
+		self.iniciado = 1
 
-		# self.js.console.log("Llave: " + llave1)
-		# self.js.console.log("Llave JS: " + llave2)
+		self.Q.done=False
+		q_table = self.Q.entrenar()
 		
-		# # print(type(llave1), llave1)
-		# # print(type(llave2), llave2)
-		# # print(llave1 == llave2)
-
-		# numero1 = str(self.contador)
-		# numero2 = str(self.js.get_numero())
-		# numero2 = str(self.js.window.sessionStorage.getItem('tab'))
-
-		if True:
-			self.js.estado_entrenando()
-			self.iniciado = 1
-
-			self.Q.done=False
-			q_table = self.Q.entrenar()
-			
-			self.entrada_db.query.update({"q_table" : q_table})
-			db.session.commit()
-		else:
-			self.js.alert("Flaco llave invalida")
+		self.entrada_db.query.update({"q_table" : q_table})
+		db.session.commit()
 
 
 	def avanzar(self):
@@ -147,31 +129,38 @@ class App:
 
 		self.js.update_table(list(q_table.flatten()))
 
-	def setear_llave(self, llave):
-		self.llave = llave
 
-	def incrementar_contador(self):
-		self.contador += 1
-
-
-
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
 	'''
 		Metodo correspondiente a la ruta "/" de la web.
 		Se carga una entrada de la tabla para ser mostrada en la interfaz,
 		además se pasan algunos parámetros a la vista. 
 	'''
+	if request.method == 'POST':
+		if 'aplicar' in request.form:
+			App.Q.set_params(
+				float(request.form['learning_rate']),
+				float(request.form['discount_factor']),
+				float(request.form['epsilon']),
+				float(request.form['learning_epsilon']),
+				float(request.form['min_epsilon']),
+				int(request.form['max_movements']),
+				int(request.form['win_reward']),
+				int(request.form['loss_reward']),
+				int(request.form['dead_reward']),
+				int(request.form['loop_reward'])
+			)
+		elif 'reset' in request.form:
+			App.Q.set_default_params()
+
 	q_table = App.Q.q_table
-	llave = random.random()
-	App.setear_llave(llave)
-	App.incrementar_contador()
+	config = App.Q.get_params()
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',
 		'q_table': list(q_table.flatten()),
-		'llave': llave,
-		'contador': App.contador
+		'config': config
 	}
 	return App.render(render_template('index.html', data=data))
 
