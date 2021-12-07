@@ -53,4 +53,4 @@ def aprender():
 
 if __name__ == '__main__':
 	#db.init_app(app)
-	app.run(debug=True, port=8888)
+	app.run(debug=True, port=8889)

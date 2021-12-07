@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import jyserver.Flask as jsf
 import numpy as np
 import time
+import random
   
 from python_code.q_learning import QLearning
 from python_code.robot import _raspi
@@ -19,10 +20,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./crawler-database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 db.init_app(app)
-
-# db.create_all()
-# if not "qtable" in db.inspect(db.engine).get_table_names():
-# db.create_all()
 
 class QTable(db.Model):
 	'''
@@ -55,7 +52,8 @@ class App:
 			desde la base de datos para almacenarla como tabla inicial.
 		'''
 		self.Q = QLearning(self)
-
+		self.llave = 0;
+		self.contador = 0
 		if "qtable" in db.inspect(db.engine).get_table_names(): # Si la tabla existe en la base de datos
 			database = QTable.query.all()
 
@@ -67,7 +65,7 @@ class App:
 			else: 					# Si existe pero se encuentra vacía, crea una entrada nueva
 				self.Q.inicializar_q_table()
 
-				print(q_table)
+				# print(q_table)
 				self.entrada_db = QTable(q_table=self.Q.q_table)
 				db.session.add(self.entrada_db)
 				db.session.commit()
@@ -85,14 +83,32 @@ class App:
 			Función que inicia el entrenamiento y guarda la tabla Q que ha 
 			sido generada tras la ejecución del mismo, en la base de datos.
 		'''
-		self.js.estado_entrenando()
-		self.iniciado = 1
+		# llave1 = str(self.llave)
+		# llave2 = str(self.js.get_llave())
+		# # llave2 = str(self.js.window.sessionStorage.getItem('tab'))
 
-		self.Q.done=False
-		q_table = self.Q.entrenar()
+		# self.js.console.log("Llave: " + llave1)
+		# self.js.console.log("Llave JS: " + llave2)
 		
-		self.entrada_db.query.update({"q_table" : q_table})
-		db.session.commit()
+		# # print(type(llave1), llave1)
+		# # print(type(llave2), llave2)
+		# # print(llave1 == llave2)
+
+		# numero1 = str(self.contador)
+		# numero2 = str(self.js.get_numero())
+		# numero2 = str(self.js.window.sessionStorage.getItem('tab'))
+
+		if True:
+			self.js.estado_entrenando()
+			self.iniciado = 1
+
+			self.Q.done=False
+			q_table = self.Q.entrenar()
+			
+			self.entrada_db.query.update({"q_table" : q_table})
+			db.session.commit()
+		else:
+			self.js.alert("Flaco llave invalida")
 
 
 	def avanzar(self):
@@ -131,6 +147,13 @@ class App:
 
 		self.js.update_table(list(q_table.flatten()))
 
+	def setear_llave(self, llave):
+		self.llave = llave
+
+	def incrementar_contador(self):
+		self.contador += 1
+
+
 
 @app.route('/')
 def index():
@@ -140,10 +163,15 @@ def index():
 		además se pasan algunos parámetros a la vista. 
 	'''
 	q_table = App.Q.q_table
+	llave = random.random()
+	App.setear_llave(llave)
+	App.incrementar_contador()
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',
-		'q_table': list(q_table.flatten())
+		'q_table': list(q_table.flatten()),
+		'llave': llave,
+		'contador': App.contador
 	}
 	return App.render(render_template('index.html', data=data))
 
