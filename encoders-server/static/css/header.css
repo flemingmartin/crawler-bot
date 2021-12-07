@@ -1,0 +1,35 @@
+.header{
+  height: var(--header_height);
+  box-sizing: border-box;
+  text-align: center;
+  padding: 10px;
+}
+
+.header h1{
+  display: inline-block;
+  color: white;
+  font-size: 3em;
+  line-height: calc(var(--header_height) - 20px);
+}
+
+.header .logo{
+  display: inline-block;
+  vertical-align: bottom;
+  height: calc(var(--header_height) - 20px);
+}
+
+.header .menu_button{
+  display: inline-block;
+  vertical-align: bottom;
+  height: calc((var(--header_height) - 20px)/2);
+  margin-top:calc((var(--header_height) - 20px)/4);
+  margin-left: 3%;
+  cursor: pointer;
+  float: left;
+}
+
+@media (max-width: 1000px){
+  .header h1{
+    font-size: 2em;
+  }
+}

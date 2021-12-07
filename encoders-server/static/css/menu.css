@@ -1,0 +1,130 @@
+#menu{
+	height: 100%;
+	background-color: #e3e3e3;
+	width: 40%;
+	min-width: 500px;
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	padding: 0 2%;
+	box-sizing: border-box;
+
+	z-index: 5;
+
+	-webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@media (max-width: 1000px){
+	#menu{
+		width: 100%;
+		min-width: auto;
+		overflow: scroll;
+	}
+}
+
+@keyframes fadeInRight {
+   0% {
+      /*right: calc(var(--menu_size)*-1);*/
+      transform: translateX(-100%);
+   }
+   100% {
+      /*right: 0;*/
+      transform: translateX(0);
+   }
+} 
+.fadeInRight {
+	-webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight;
+}
+@keyframes fadeOutRight {
+   0% {
+      transform: translateX(0);
+   }
+   100% {
+      transform: translateX(-100%);
+   }
+} 
+.fadeOutRight {
+	-webkit-animation-name: fadeOutRight;
+    animation-name: fadeOutRight;
+}
+
+
+#menu .menu_header{
+	height: var(--header_height);
+	box-sizing: border-box;
+	text-align: center;
+	padding: 10px;
+}
+
+#menu .menu_header .menu_button{
+	display: inline-block;
+	vertical-align: bottom;
+	height: calc((var(--header_height) - 20px)/2);
+	margin-top: calc((var(--header_height) - 20px)/4);
+	margin-right: 3%;
+	cursor: pointer;
+	float: right;
+}
+
+#menu .menu_header h2{
+	display: inline-block;
+	line-height: calc(var(--header_height) - 20px);
+}
+
+#menu .cuerpo{
+	width: 100%;
+	height: calc(100% - var(--header_height));
+}
+
+#menu .cuerpo .input{
+	width: 100%;
+	margin-bottom: 1%;
+}
+#menu .cuerpo .input label{
+	display: inline-block;
+	width: 45%;
+	margin-right: 5%;
+	text-align: right;
+	font-size: 1.5em;
+}
+#menu .cuerpo .input .info .info_icon{
+	cursor: pointer;
+	height: 22px;
+	vertical-align: middle;
+}
+#menu .cuerpo .input .info .info_icon:hover + .info_text{
+	display: block;
+}
+#menu .cuerpo .input .info{
+	display: inline-block;
+	margin-left: 10px;
+	position: relative;
+}
+#menu .cuerpo .input .info .info_text{
+	--info_width: 300px;
+	display: none;
+	width: var(--info_width);
+	min-height: 60px;
+	border: 1px solid black;
+	position: absolute;
+	top: 0;
+	right: calc(var(--info_width)*-1 - 20px);
+	padding: 15px;
+	box-sizing: border-box;
+	border-color: black;
+	color: black;
+	background: linear-gradient(to bottom right, #00EDF5, #ABA9BF);
+}
+
+#menu .cuerpo .submit{
+	display: block;
+	width: 30%;
+	margin-top: 5%;
+	margin-left: 35%;
+	padding: 2%;
+	box-sizing: border-box;
+}

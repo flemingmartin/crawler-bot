@@ -132,21 +132,43 @@ class App:
 		self.js.update_table(list(q_table.flatten()))
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
 	'''
 		Metodo correspondiente a la ruta "/" de la web.
 		Se carga una entrada de la tabla para ser mostrada en la interfaz,
 		además se pasan algunos parámetros a la vista. 
 	'''
+	if request.method == 'POST':
+		if 'aplicar' in request.form:
+			App.Q.set_params(
+				request.form['learning_rate'],
+				request.form['discount_factor'],
+				request.form['epsilon'],
+				request.form['learning_epsilon'],
+				request.form['min_epsilon'],
+				request.form['max_movements'],
+				request.form['win_reward'],
+				request.form['loss_reward'],
+				request.form['dead_reward'],
+				request.form['loop_reward']
+			)
+		elif 'reset' in request.form:
+			App.Q.set_default_params()
+
+
 	q_table = App.Q.q_table
+	config = App.Q.get_params()
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',
-		'q_table': list(q_table.flatten())
+		'q_table': list(q_table.flatten()),
+		'config': config
 	}
-	return App.render(render_template('index.html', data=data))
+	
 
+
+	return App.render(render_template('index.html', data=data))
 
 def pagina_no_encontrada(error):
 	'''

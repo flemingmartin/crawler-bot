@@ -37,7 +37,24 @@ class QLearning():
 		# Instancia del Robot
 		self.robot = Robot(self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD)
 		
+	def set_params(self,learning_rate,discount,epsilon,learning_epsilon,min_epsilon,max_movements,win_reward,loss_reward,dead_reward,loop_reward):
+		self.LEARNING_RATE = learning_rate		
+		self.DISCOUNT = discount
+		self.EPSILON = epsilon
+		self.LEARNING_EPSILON = learning_epsilon
+		self.MIN_EPSILON = min_epsilon
+		self.MAX_MOVEMENTS =max_movements
+		self.WIN_REWARD = win_reward
+		self.LOSS_REWARD = loss_reward
+		self.DEAD_REWARD = dead_reward
+		self.LOOP_REWARD = loop_reward
 
+	def set_default_params(self):
+		self.set_params(0.4,0.9,0.9,0.002,0.15,15,4,-4,-4,-4)
+
+	def get_params(self):
+		return [self.LEARNING_RATE,self.DISCOUNT,self.EPSILON,self.LEARNING_EPSILON,self.MIN_EPSILON,self.MAX_MOVEMENTS,self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD,self.LOOP_REWARD]
+	
 	def inicializar_q_table(self, q_table = None):
 		'''
 			Inicializador de la tabla Q

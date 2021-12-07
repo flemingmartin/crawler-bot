@@ -1,98 +1,108 @@
 $(function(){
   $('#Avanzar').click(function(){
-    $('#Avanzar').hide();
-    $('#Detener').show();
-    $('#Entrenar').hide();
-    $('#No_Entrenar').show();
-    $('#Reset').hide();
-    $('#No_Reset').show();
+    $('#Avanzar').addClass("hidden");
+    $('#Detener').removeClass("hidden");
+    $('#Entrenar').addClass("hidden");
+    $('#No_Entrenar').removeClass("hidden");
+    $('#Reset').addClass("hidden");
+    $('#No_Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Avanzando";
   });
   $('#Detener').click(function(){
-    $('#Detener').hide();
-    $('#Avanzar').show();
-    $('#No_Entrenar').hide();
-    $('#Entrenar').show();
-    $('#No_Reset').hide();
-    $('#Reset').show();
+    $('#Detener').addClass("hidden");
+    $('#Avanzar').removeClass("hidden");
+    $('#No_Entrenar').addClass("hidden");
+    $('#Entrenar').removeClass("hidden");
+    $('#No_Reset').addClass("hidden");
+    $('#Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
   });
   $('#Entrenar').click(function(){
-    $('#Entrenar').hide();
-    $('#Finalizar').show();
-    $('#Avanzar').hide();
-    $('#No_Avanzar').show();
-    $('#Reset').hide();
-    $('#No_Reset').show();
+    $('#Entrenar').addClass("hidden");
+    $('#Finalizar').removeClass("hidden");
+    $('#Avanzar').addClass("hidden");
+    $('#No_Avanzar').removeClass("hidden");
+    $('#Reset').addClass("hidden");
+    $('#No_Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Entrenando";
   });
   $('#Finalizar').click(function(){
-    $('#Finalizar').hide();
-    $('#Entrenar').show();
-    $('#No_Avanzar').hide();
-    $('#Avanzar').show();
-    $('#No_Reset').hide();
-    $('#Reset').show();
+    $('#Finalizar').addClass("hidden");
+    $('#Entrenar').removeClass("hidden");
+    $('#No_Avanzar').addClass("hidden");
+    $('#Avanzar').removeClass("hidden");
+    $('#No_Reset').addClass("hidden");
+    $('#Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
   });
+  $('#abrir_menu').click(function(){
+    $('#menu').removeClass("hidden");
+    $('#menu').removeClass("fadeOutRight");
+    $('#menu').addClass("fadeInRight");
+  })
+  $('#cerrar_menu').click(function(){
+    $('#menu').removeClass("hidden");
+    $('#menu').removeClass("fadeInRight");
+    $('#menu').addClass("fadeOutRight");
+  })
 })
 
 // OTRA ALTERNATIVA 
 function estado_avanzando(){
-  // $('#Avanzar').hide();
-  // $('#No_Avanzar').hide();
-  // $('#Detener').show();
+  // $('#Avanzar').css("display", "none");
+  // $('#No_Avanzar').css("display", "none");
+  // $('#Detener').css("display", "block");
 
-  // $('#Entrenar').hide();
-  // $('#No_Entrenar').show();
-  // $('#Finalizar').hide();
+  // $('#Entrenar').css("display", "none");
+  // $('#No_Entrenar').css("display", "block");
+  // $('#Finalizar').css("display", "none");
 
-  // $('#Reset').hide();
-  // $('#No_Reset').show();
+  // $('#Reset').css("display", "none");
+  // $('#No_Reset').css("display", "block");
 
   // var contenido = document.getElementById("Estado").innerText = "Estado: Avanzando";
 }
 
 function estado_detenido_entrenar(){
-  // $('#Avanzar').show();
-  // $('#No_Avanzar').hide();
-  // $('#Detener').hide();
+  // $('#Avanzar').css("display", "block");
+  // $('#No_Avanzar').css("display", "none");
+  // $('#Detener').css("display", "none");
 
-  // $('#Entrenar').show();
-  // $('#No_Entrenar').hide();
-  // $('#Finalizar').hide();
+  // $('#Entrenar').css("display", "block");
+  // $('#No_Entrenar').css("display", "none");
+  // $('#Finalizar').css("display", "none");
 
-  // $('#Reset').show();
-  // $('#No_Reset').hide();
+  // $('#Reset').css("display", "block");
+  // $('#No_Reset').css("display", "none");
 
   // var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
 }
 
 function estado_entrenando(){
-  // $('#Avanzar').hide();
-  // $('#No_Avanzar').show();
-  // $('#Detener').hide();
+  // $('#Avanzar').css("display", "none");
+  // $('#No_Avanzar').css("display", "block");
+  // $('#Detener').css("display", "none");
 
-  // $('#Entrenar').hide();
-  // $('#No_Entrenar').hide();
-  // $('#Finalizar').show();
+  // $('#Entrenar').css("display", "none");
+  // $('#No_Entrenar').css("display", "none");
+  // $('#Finalizar').css("display", "block");
 
-  // $('#Reset').hide();
-  // $('#No_Reset').show();
+  // $('#Reset').css("display", "none");
+  // $('#No_Reset').css("display", "block");
 
   // var contenido = document.getElementById("Estado").innerText = "Estado: Entrenando";
 }
 
 function estado_detenido_finalizar(){
-  // $('#Avanzar').show();
-  // $('#No_Avanzar').hide();
-  // $('#Detener').hide();
+  // $('#Avanzar').css("display", "block");
+  // $('#No_Avanzar').css("display", "none");
+  // $('#Detener').css("display", "none");
 
-  // $('#Entrenar').show();
-  // $('#No_Entrenar').hide();
-  // $('#Finalizar').hide();
+  // $('#Entrenar').css("display", "block");
+  // $('#No_Entrenar').css("display", "none");
+  // $('#Finalizar').css("display", "none");
 
-  // $('#Reset').show();
-  // $('#No_Reset').hide();
+  // $('#Reset').css("display", "block");
+  // $('#No_Reset').css("display", "none");
   // var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
 }

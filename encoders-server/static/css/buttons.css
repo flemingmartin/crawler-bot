@@ -1,0 +1,83 @@
+.botones {
+  margin-top: 20%;
+  width: 30%;
+  min-width: 150px;
+  margin-left: 35%;
+}
+
+.button {
+  display:  block;
+  padding:  20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+  border: solid 3px white;
+  border-radius: 15px;
+  text-decoration: none;
+  margin-bottom: 0.7em;
+  cursor:  pointer;
+  width: 100%;
+}
+
+@media (max-width: 1000px){
+  .botones{
+    margin-top: 5%;
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+  .button{
+    display: inline-block;
+    width: 30%;
+    min-width: 120px;
+    font-size: 1em;
+  }
+}
+
+.avanzar_button {
+  /*background-color: #0B0B61;*/
+  border-color: black;
+  color: black;
+  background: linear-gradient(to bottom right, #00EDF5, #ABA9BF);
+}
+
+.detener_button {
+  /*background-color: #8A0808;*/
+  border-color: black;
+  color: black;
+  background: linear-gradient(to bottom right, #F46036, #E71D36);
+}
+
+.entrenar_button {
+  /*background-color: #0B610B;*/
+  border-color: black;
+  color: black;
+  background: linear-gradient(to bottom right, #018E42, #C5EDAC);
+}
+
+.finalizar_button {
+  /*background-color: #8A0808;*/
+  border-color: black;
+  color: black;
+  background: linear-gradient(to bottom right, #F46036, #E71D36);
+}
+
+.zoom_button {
+  transition: transform .2s;
+}
+
+.zoom_button:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+.hidden {
+  display: none;
+}
+
+.deshabilitado{
+	background-color: #252525;
+	border-color: gray;
+	cursor: default;
+}
