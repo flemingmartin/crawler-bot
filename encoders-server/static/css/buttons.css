@@ -1,8 +1,8 @@
 .botones {
-  margin-top: 10%;
   width: 30%;
   min-width: 150px;
-  margin-left: 35%;
+  margin:  auto;
+  margin-top: 10%;
 }
 
 .button {
@@ -11,7 +11,8 @@
   font-size: 1.5em;
   font-weight: bold;
   color: white;
-  border: solid 3px white;
+  /*border: solid 3px white;*/
+  border: solid 3px black;
   border-radius: 15px;
   text-decoration: none;
   margin-bottom: 0.7em;
@@ -54,28 +55,24 @@
 
 .avanzar_button {
   /*background-color: #0B0B61;*/
-  border-color: black;
   color: black;
   background: linear-gradient(to bottom right, #00EDF5, #ABA9BF);
 }
 
 .detener_button {
-  /*background-color: #8A0808;*/
-  border-color: black;
+  /*background-color: #8A0808;*/;
   color: black;
   background: linear-gradient(to bottom right, #F46036, #E71D36);
 }
 
 .entrenar_button {
   /*background-color: #0B610B;*/
-  border-color: black;
   color: black;
   background: linear-gradient(to bottom right, #018E42, #C5EDAC);
 }
 
 .finalizar_button {
   /*background-color: #8A0808;*/
-  border-color: black;
   color: black;
   background: linear-gradient(to bottom right, #F46036, #E71D36);
 }

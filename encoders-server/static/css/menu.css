@@ -13,16 +13,54 @@
 	z-index: 5;
 
 	-webkit-animation-duration: 1s;
-   animation-duration: 1s;
-   -webkit-animation-fill-mode: both;
-   animation-fill-mode: both;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#menu p:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+/* Tamaño del scroll */
+#menu::-webkit-scrollbar {
+  width: 7px;
+}
+
+ /* Estilos barra (thumb) de scroll */
+#menu::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+#menu::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+#menu::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+ /* Estilos track de scroll */
+#menu::-webkit-scrollbar-track {
+  background: #797979;
+  border-radius: 4px;
+}
+
+#menu::-webkit-scrollbar-track:hover, 
+#menu::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
 }
 
 @media (max-width: 1000px){
 	#menu{
 		width: 100%;
 		min-width: auto;
-		overflow: scroll;
+		overflow-y: scroll;
 	}
 	#menu .cuerpo .input .info .info_text{
 		left: calc(var(--info_width)*-1 - 20px);
@@ -95,6 +133,11 @@
 	text-align: right;
 	font-size: 1.5em;
 }
+#menu .cuerpo .input .info{
+	display: inline-block;
+	margin-left: 10px;
+	position: relative;
+}
 #menu .cuerpo .input .info .info_icon{
 	cursor: pointer;
 	height: 22px;
@@ -109,11 +152,6 @@
 #menu .cuerpo .input .info .info_icon:hover + .info_text{
 	display: block;
 }
-#menu .cuerpo .input .info{
-	display: inline-block;
-	margin-left: 10px;
-	position: relative;
-}
 #menu .cuerpo .input .info .info_text{
 	--info_width: 300px;
 	display: none;
@@ -122,7 +160,8 @@
 	border: 1px solid black;
 	position: absolute;
 	top: 0;
-	right: calc(var(--info_width)*-1 - 20px);
+	/*right: calc(var(--info_width)*-1 - 20px);*/
+	left: calc(var(--info_width)*-1 - 20px);
 	padding: 15px;
 	box-sizing: border-box;
 	border-color: black;

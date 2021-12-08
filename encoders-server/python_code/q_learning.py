@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import random
+from threading import Semaphore
 
 from python_code.robot import Robot
 
@@ -14,17 +15,19 @@ class QLearning():
 		'''
 			Constructor de la clase QLearning
 		'''
-		# Variables relacionadas al entrenamiento 
-		self.done = False				# Indica si finalizo el entrenamiento
-		self.ACTIONS = 4 				# Número de acciones posibles
-		self.STATE_SIZE = (3,3)			# Cantidad de estados posibles
 
-		self.LEARNING_RATE = 0.4		# Tasa de aprendizaje del modelo
-		self.DISCOUNT = 0.9				# Factor de descuento de recompensas futuras
-		self.EPSILON = 0.9				# Factor de aleatoriedad del modelo
-		self.LEARNING_EPSILON = 0.002 	# Descuento de aleatoriedad
-		self.MIN_EPSILON = 0.15			# Minima aleatoriedad
-		self.MAX_MOVEMENTS = 15			# Maximos movimientos del brazo sin obtener recompensa
+		# Variables relacionadas al entrenamiento 
+		self.done = False					# Indica si finalizo el entrenamiento
+		self.semaforo_done = Semaphore(1)	# Semaforo que protege la variable done
+		self.ACTIONS = 4 					# Número de acciones posibles
+		self.STATE_SIZE = (3,3)				# Cantidad de estados posibles
+
+		self.LEARNING_RATE = 0.4			# Tasa de aprendizaje del modelo
+		self.DISCOUNT = 0.9					# Factor de descuento de recompensas futuras
+		self.EPSILON = 0.9					# Factor de aleatoriedad del modelo
+		self.LEARNING_EPSILON = 0.002 		# Descuento de aleatoriedad
+		self.MIN_EPSILON = 0.15				# Minima aleatoriedad
+		self.MAX_MOVEMENTS = 15				# Maximos movimientos del brazo sin obtener recompensa
 		
 		# Posibles recompensas del entrenamiento
 		self.WIN_REWARD = 4				# Recompensa obtenida al avanzar
@@ -38,31 +41,84 @@ class QLearning():
 		# Instancia del Robot
 		self.robot = Robot(self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD)
 		
+		
 	def set_params(self,learning_rate,discount,epsilon,learning_epsilon,min_epsilon,max_movements,win_reward,loss_reward,dead_reward,loop_reward):
-		self.LEARNING_RATE = learning_rate			# Tasa de aprendizaje del modelo					
-		self.DISCOUNT = discount					# Factor de descuento de recompensas futuras	
-		self.EPSILON = epsilon						# Factor de aleatoriedad del modelo
-		self.LEARNING_EPSILON = learning_epsilon	# Descuento de aleatoriedad					
-		self.MIN_EPSILON = min_epsilon				# Minima aleatoriedad		
-		self.MAX_MOVEMENTS =max_movements			# Maximos movimientos del brazo sin obtener recompensa			
-		self.WIN_REWARD = win_reward				# Recompensa obtenida al avanzar		
-		self.LOSS_REWARD = loss_reward				# Recompensa obtenida al retroceder		
-		self.DEAD_REWARD = dead_reward				# Recompensa obtenida al realizar un movimiento no permitido		
-		self.LOOP_REWARD = loop_reward				# Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa		
+		'''
+			Función encargada de establecer los parametros de entrenamiento, recibidos por parámetro
+
+			Parámetros
+			----------
+				learning_rate (float): Tasa de aprendizaje del modelo					
+				discount (float): Factor de descuento de recompensas futuras	
+				epsilon (float): Factor de aleatoriedad del modelo
+				learning_epsilon (float): Descuento de aleatoriedad					
+				min_epsilon (float): Minima aleatoriedad		
+				max_movements (int): Maximos movimientos del brazo sin obtener recompensa			
+				win_reward (int): Recompensa obtenida al avanzar		
+				loss_reward (int): Recompensa obtenida al retroceder		
+				dead_reward (int): Recompensa obtenida al realizar un movimiento no permitido		
+				loop_reward (int): Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa
+		'''
+		self.LEARNING_RATE = learning_rate		
+		self.DISCOUNT = discount				
+		self.EPSILON = epsilon					
+		self.LEARNING_EPSILON = learning_epsilon
+		self.MIN_EPSILON = min_epsilon			
+		self.MAX_MOVEMENTS =max_movements		
+		self.WIN_REWARD = win_reward			
+		self.LOSS_REWARD = loss_reward			
+		self.DEAD_REWARD = dead_reward			
+		self.LOOP_REWARD = loop_reward			
+
 
 	def set_default_params(self):
+		'''
+			Función que setea los parámetros de entranamiento con sus valores por defecto
+
+			Establece
+			----------
+				learning_rate (float): 0.4
+				discount (float): 0.9
+				epsilon (float): 0.9
+				learning_epsilon (float): 0.002
+				min_epsilon (float): 0.15
+				max_movements (int): 15
+				win_reward (int): 4
+				loss_reward (int): -4
+				dead_reward (int): -4
+				loop_reward (int): -4
+		'''
 		self.set_params(0.4,0.9,0.9,0.002,0.15,15,4,-4,-4,-4)
 
+
 	def get_params(self):
+		'''
+			Función que retorna los valores actuales de los parámetros de entrenamiento
+
+			Devuelve
+			--------
+				self.LEARNING_RATE (float): Tasa de aprendizaje del modelo					
+				self.DISCOUNT (float): Factor de descuento de recompensas futuras	
+				self.EPSILON (float): Factor de aleatoriedad del modelo
+				self.LEARNING_EPSILON (float): Descuento de aleatoriedad					
+				self.MIN_EPSILON (float): Minima aleatoriedad		
+				self.MAX_MOVEMENTS (int): Maximos movimientos del brazo sin obtener recompensa			
+				self.WIN_REWARD (int): Recompensa obtenida al avanzar		
+				self.LOSS_REWARD (int): Recompensa obtenida al retroceder		
+				self.DEAD_REWARD (int): Recompensa obtenida al realizar un movimiento no permitido		
+				self.LOOP_REWARD (int): Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa
+		'''
 		return [self.LEARNING_RATE,self.DISCOUNT,self.EPSILON,self.LEARNING_EPSILON,self.MIN_EPSILON,self.MAX_MOVEMENTS,self.WIN_REWARD,self.LOSS_REWARD,self.DEAD_REWARD,self.LOOP_REWARD]
-	
+
+
 	def inicializar_q_table(self, q_table = None):
 		'''
 			Inicializador de la tabla Q
 			Parametros
 			----------
-				q_table: Recibe los valores de la tabla para ser inicializados
-						 Valor por defecto: None. En este caso se inicializan todos los valores en 0
+				q_table (numpy.arrray): 
+						Recibe los valores de la tabla para ser inicializados
+						Valor por defecto: None. En este caso se inicializan todos los valores en 0
 		'''
 		if q_table is None:
 			self.q_table = np.zeros(shape=(self.STATE_SIZE + (self.ACTIONS,)))
@@ -88,14 +144,19 @@ class QLearning():
 		state = self.robot.reset()
 
 		# Bucle principal de entrenamiento
+		self.semaforo_done.acquire()
 		while not self.done:
+			self.semaforo_done.release()
+
 			# Antes estaba el reset acá 
 			dead = False	# Variable que indica si el robot realizó un movimiento no permitido
 			movements = 0 	# Variable que indica la cantidad de movimientos realizados por el robot
 
 			# Bucle de entrenamiento
+			self.semaforo_done.acquire()
 			while not dead and not self.done:
-				
+				self.semaforo_done.release()
+
 				# Elegir accion a tomar
 				if random.random() < epsilon:
 					action = random.randint(0,3)	# Accion aleatoria
@@ -142,7 +203,10 @@ class QLearning():
 				state = new_state
 
 				# Actualizacion de la tabla mediante manejo del DOM
-				self.app.js.update_table(list(self.q_table.flatten()))				
+				self.app.js.update_table(list(self.q_table.flatten()))
+
+			self.semaforo_done.release()
+		self.semaforo_done.release()		
 
 		# Terminar la ejecucion del robot y llevar a un estado de reposo
 		self.robot.finalizar_lectura()

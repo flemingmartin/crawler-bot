@@ -16,6 +16,7 @@
   display: inline-block;
   vertical-align: bottom;
   height: calc(var(--header_height) - 20px);
+  margin-left: 1%;
 }
 
 .header .menu_button{

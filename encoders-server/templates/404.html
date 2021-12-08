@@ -3,12 +3,37 @@
 {% block title %} {{ data.titulo }} {% endblock %}
 
 {% block body %}
-	<center class="letra-blanca">
-		<h1>¡ERROR 404!</h1>
-		<h2>No existe la página</h2>
-		<h3 style="color: white">La página no fue encontrada</h3>
-		<a class="button detener_button zoom_button" href="{{ url_for ('index') }}">Inicio</a>
-	</center>
+	<div class="header">
+		<h1> Crawler-bot </h1>
+		<img src="static/images/Logo.png" class="logo">
+	</div>
+	<div class="main_div">
+		<div class="centrado">
+			<div class="vertical">
+				<h1>¡ERROR 404!</h1>
+				<h2>No existe la página</h2>
+				<h3>La página no fue encontrada</h3>
+				<a class="boton_inicio detener_button zoom_button" href="{{ url_for ('index') }}">Inicio</a>
+			</div>
+		</div>
+	</div>
+	<div class="animateme">
+		  <ul class="bg-bubbles">
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		    <li></li>
+		  </ul>
+		</div>
 {% endblock %}
 
 {% block js_imports %}

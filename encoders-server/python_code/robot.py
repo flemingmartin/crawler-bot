@@ -30,15 +30,20 @@ class Robot():
 				recompensa_retroceder: valor asignado a la recompensa al retroceder
 				recompensa_dead: valor asignado a la recompensa al intentar hacer un movimiento incorrecto
 		'''
-		if _raspi: 
+		if _raspi: # Si se está ejecutando en una Raspi, se crea el administrador de entrada/salida
 			self.adminES = AdminES()
-		self.angulos = [0,40,75]
-		self.encoders = self.lectura_encoders()
+		
+		self.angulos = [0,40,75]	# Establecimiento de los angulos posibles para los encoders
+		self.encoders = self.lectura_encoders()	# Lectura inicial de los encoders
+		
+		# Inicialización de variables
 		self.recompensa = 0
 		self.lectura_bloqueada = False
 		self.recompensa_avanzar = recompensa_avanzar
 		self.recompensa_retroceder = recompensa_retroceder
 		self.recompensa_dead = recompensa_dead
+
+		# Semaforos de proteccion de variables compartidas entre hilos
 		self.semaforo_recompensa = Semaphore(1)
 		self.semaforo_flag_bloqueo = Semaphore(1)
 
@@ -52,7 +57,7 @@ class Robot():
 				El estado [1,1] como una tupla
 		'''
 		self.state = [1,1]
-		if _raspi:
+		if _raspi:	# Si se está ejecutando en una Raspi, mueve los servomotores al estado inicial
 			self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
 			self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
 		return tuple(self.state)
@@ -76,6 +81,7 @@ class Robot():
 
 		old_state = self.state.copy()
 
+		# Comprobación y ejecución de accioens
 		if action == 0:				# Accion 0: mover hacia abajo la primera articulacion
 			if self.state[0]>0:
 				self.state[0]-=1
@@ -99,10 +105,10 @@ class Robot():
 
 		if not dead:				# Si no intentó ir a una posición incorrecta, realiza la accion
 			if action < 2:
-				if _raspi:
+				if _raspi:			# Si se ejecuta en Raspi, mueve el servomotor correspondiente
 					self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
 			else:
-				if _raspi:
+				if _raspi:			# Si se ejecuta en Raspi, mueve el servomotor correspondiente
 					self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
 
 		# Establece recompensa y la desbloquea para su actualización
@@ -128,6 +134,7 @@ class Robot():
 			self.adminES.reposo()
 		print("reposo")
 
+
 	def iniciar_lectura(self):
 		'''
 			Inicia el hilo encargado de la lectura de los encoders
@@ -135,11 +142,13 @@ class Robot():
 		self.thread_encoders = StoppableThread(target = self.threading_function)
 		self.thread_encoders.start()
 
+
 	def finalizar_lectura(self):
 		'''
 			Detiene el hilo encargado de la lectura de los encoders
 		'''
 		self.thread_encoders.stop()
+
 
 	def lectura_encoders(self):
 		'''
@@ -158,6 +167,7 @@ class Robot():
 			encoders[0] = int(random.randint(0, 4) == 0)
 			encoders[1] = int(random.randint(0, 4) == 0)
 		return encoders
+
 
 	def calcular_avance(self, encoder):
 		'''
@@ -199,11 +209,13 @@ class Robot():
 					return self.recompensa_retroceder	# El movimiento es hacia atrás
 		return 0
 
+
 	def threading_function(self):
 		'''
 			Función ejecutada por el StoppableThread.
 			Si aun no se ha detenido el hilo, lee los encoders.
 			Y luego si la variable recompensa no está bloqueada, la actualiza.
+			Protege el acceso simultaneo a variables compartidas a través del uso de semáforos.
 		'''
 		while not self.thread_encoders.stopped():
 			encoders = self.lectura_encoders()
