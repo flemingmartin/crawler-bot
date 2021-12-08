@@ -1,8 +1,9 @@
 {% extends './layout.html' %}
 
+<!-- Titulo de la página -->
 {% block title %} {{ data.titulo }} {% endblock %}
 
-
+<!-- Importación de archivos css propios de index -->
 {% block css_imports%}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/tabla.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
@@ -10,6 +11,7 @@
 {% endblock %}
 
 
+<!-- Bloque del cuerpo del index -->
 {% block body %}
 
 	<div id="oscuridad">
@@ -72,7 +74,6 @@
 				      {% endfor %}
 				    </div>
 			    {% endfor %}
-
 		  	</div>
 		</div>
 		
@@ -118,6 +119,7 @@
 
 {% endblock %}
 
+<!-- Importación de archivos js propios del index -->
 {% block js_imports %}
 	<script src="{{ url_for('static', filename = 'js/input_number.js') }}"> </script>
 	<script src="{{ url_for('static', filename = 'js/tabla.js') }}"></script>

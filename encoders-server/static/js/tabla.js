@@ -1,5 +1,14 @@
 function update_table(new_weights, state){
+	/*
+		Función que actualiza los valores y colores de la tabla q
+		de la interfaz web. Así como también actualiza el punto
+		correspondiente al estado actual. 
 
+		Parámetros
+		----------
+			new_weights (array): valores actuales de la tabla q
+			state (array): estado actual del robot en formato (y,x)
+	*/
 	var t = document.getElementById("tabla");
 	var aux = [0,0,0,0]
 	var rows = t.getElementsByClassName("row");
@@ -25,6 +34,14 @@ function update_table(new_weights, state){
 }
 
 function update_state(state){
+	/*
+		Función encargada de actualizar el punto de 
+		estado actual en la tabla de la interfaz web 
+
+		Parámetros
+		----------
+			state (array): estado actual del robot en formato (y,x)
+	*/
 	var x_clases = ["x0","x1","x2"];
 	var y_clases = ["y0","y1","y2"];
 	var estado = document.getElementById("estado");

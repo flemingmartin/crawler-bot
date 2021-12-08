@@ -1,5 +1,4 @@
 .input-number {
-  /*width: 80px;*/
   width: 10%;
   padding: 0 12px;
   vertical-align: top;
@@ -18,7 +17,6 @@
 .input-number-decrement,
 .input-number-increment {
   display: inline-block;
-  /*width: 30px;*/
   width: 4%;
   line-height: 38px;
   background: #f1f1f1;
@@ -42,14 +40,12 @@
   border-radius: 0 4px 4px 0;
 }
 
-/* Chrome, Safari, Edge, Opera */
 .input-number::-webkit-outer-spin-button,
 .input-number::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Firefox */
 .input-number[type=number] {
   -moz-appearance: textfield;
 }

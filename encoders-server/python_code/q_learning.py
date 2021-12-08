@@ -227,7 +227,7 @@ class QLearning():
 		while not self.done:
 			action = np.argmax(self.q_table[state])	# Tomar la mejor accion segun el modelo
 			state,_,_ = self.robot.step(action)		# Realizar la accion en el agente
-			self.app.js.update_state(state)
+			self.app.js.update_state(state)			# Actualiza el punto en la tabla de la interfaz web
 
 		# Llevar al robot a un estado de reposo
 		self.robot.reposo()

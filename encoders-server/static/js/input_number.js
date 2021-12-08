@@ -1,41 +1,62 @@
 (function() {
- 
-  window.inputNumber = function(el) {
-    el.each(function() {
-      init($(this));
-    });
+	window.inputNumber = function(el) {
+		/*
+		  	Recibe una lista de elementos y ejecuta la función init para cada uno
 
-    function init(el) {
-      var min = el.attr('min');
-      var max = el.attr('max');
-      var step = parseFloat(el.attr('step'));
-      var presicion = Math.log10(step)*-1
+		  	Parámetros
+		  	----------
+				el (array): lista de elementos a modificar
+		*/
+		el.each(function() { // Por cada elemento se ejecuta init
+			init($(this));
+		});
 
-      var els = {};
-      els.dec = el.prev();
-      els.inc = el.next();
+		function init(el) {
+			/* 
+				Recibe un elemento, configura los botones - y + para el 
+				anterior y siguiente respectivamente. 
+				
+				Parámetros
+				----------
+					el: elemento correspondiente a un input-number
+			*/
+			var min = el.attr('min');
+			var max = el.attr('max');
+			var step = parseFloat(el.attr('step'));
+			var presicion = Math.log10(step)*-1
 
-      els.dec.on('click', decrement);
-      els.inc.on('click', increment);
+			var els = {};
+			els.dec = el.prev();
+			els.inc = el.next();
 
-      function decrement() {
-        var value = parseFloat(el[0].value);
-        var new_value = value-step;
-        if (new_value > min){
-          el[0].value = new_value.toFixed(presicion);
-        }
-        
-      }
+			els.dec.on('click', decrement);
+			els.inc.on('click', increment);
 
-      function increment() {
-        var value = parseFloat(el[0].value);
-        var new_value = value+step;
-        if (new_value < max){
-          el[0].value = new_value.toFixed(presicion);
-        }
-      }
-    }
-  }
+			function decrement() {
+				/*
+					Función utilizada para decrementar el valor de input-number.
+					Tiene en cuenta el valor mínimo, la presicion y el step asignados. 
+				*/
+				var value = parseFloat(el[0].value);
+				var new_value = value-step;
+				if (new_value > min){
+					el[0].value = new_value.toFixed(presicion);
+				}
+		  	}
+
+			function increment() {
+				/*
+					Función utilizada para decrementar el valor de input-number.
+					Tiene en cuenta el valor máximo, la presicion y el step asignados. 
+				*/
+				var value = parseFloat(el[0].value);
+				var new_value = value+step;
+				if (new_value < max){
+					el[0].value = new_value.toFixed(presicion);
+				}
+			}
+		}
+	}
 })();
 
-inputNumber($('.input-number'));
+inputNumber($('.input-number')); // Asigna el comportamiento de los botones a cada elemento de la clase input-number

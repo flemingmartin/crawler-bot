@@ -4,26 +4,29 @@
 	<meta charset="utf-8">
 	<meta http_equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
 
+	<!-- Se importan los archivos css comunes a todas las páginas -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/animated_background.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 
+	<!-- Importación de archivos css propios de la página -->
 	{% block css_imports%}
 	{% endblock %}
 
-	<link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+	<!-- Titulo de la página -->
 	<title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
+	<!-- Bloque del cuerpo de la página -->
 	{% block body %}
 	{% endblock %}
 	
+	<!-- Importación de archivos js propios de la página -->
 	{% block js_imports%}
 	{% endblock %}
 </body>
