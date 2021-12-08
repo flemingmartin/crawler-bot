@@ -49,6 +49,7 @@
 		<div class="bloque_izquierda">			
 			<h2 class="tablaq_title"> Tabla Q </h2>
 			<div class="tabla" id="tabla">
+				<div class="x2 y1" id="estado"></div>
 				{% for _ in range(3) %}
 				    <div class="row">
 				      {% for _ in range(3)%}
@@ -63,6 +64,7 @@
 				      {% endfor %}
 				    </div>
 			    {% endfor %}
+
 		  	</div>
 		</div>
 		
@@ -113,5 +115,5 @@
 	<script src="{{ url_for('static', filename = 'js/layout.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/effects.js') }}"> </script>
-	<script> update_table({{ data.q_table }}) </script>
+	<script> update_table({{ data.q_table }}, {{data.state}}) </script>
 {% endblock %}

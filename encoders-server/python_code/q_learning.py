@@ -203,10 +203,10 @@ class QLearning():
 				state = new_state
 
 				# Actualizacion de la tabla mediante manejo del DOM
-				self.app.js.update_table(list(self.q_table.flatten()))
+				self.app.js.update_table(list(self.q_table.flatten()),list(state))				
 
 			self.semaforo_done.release()
-		self.semaforo_done.release()		
+		self.semaforo_done.release()
 
 		# Terminar la ejecucion del robot y llevar a un estado de reposo
 		self.robot.finalizar_lectura()
@@ -227,7 +227,10 @@ class QLearning():
 		while not self.done:
 			action = np.argmax(self.q_table[state])	# Tomar la mejor accion segun el modelo
 			state,_,_ = self.robot.step(action)		# Realizar la accion en el agente
+			self.app.js.update_state(state)
 
 		# Llevar al robot a un estado de reposo
 		self.robot.reposo()
+
+
 		
