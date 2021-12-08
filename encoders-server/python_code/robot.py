@@ -58,7 +58,7 @@ class Robot():
 				El estado [1,1] como una tupla
 		'''
 		self.state = [1,1]
-		if _raspi:	# Si se está ejecutando en una Raspi, mueve los servomotores al estado inicial
+		if _raspi:		# Si se está ejecutando en una Raspi, mueve los servomotores al estado inicial
 			self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
 			self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
 		return tuple(self.state)
@@ -131,9 +131,8 @@ class Robot():
 			Metodo encargado de llevar al Robot al estado de reposo,
 			mediante la ejecución de adminES.reposo() si se ejecuta en Raspberry
 		'''
-		if _raspi:
+		if _raspi:	# Si se ejecuta en Raspi, lleva al Robot al estado de reposo
 			self.adminES.reposo()
-		print("reposo")
 
 
 	def iniciar_lectura(self):
@@ -197,7 +196,6 @@ class Robot():
 					self.semaforo_flag_bloqueo.acquire()
 					self.lectura_bloqueada = True  		# Bloquea el movimiento detectado hasta que sea leído
 					self.semaforo_flag_bloqueo.release()
-					
 					# print("avance")
 					return self.recompensa_avanzar		# El movimiento es hacia adelante
 				if encoder[1] > self.encoders[1]:  		# El encoder 1 pasó de 0 a 1

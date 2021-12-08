@@ -7,6 +7,8 @@ $(function(){
     $('#Reset').addClass("hidden");
     $('#No_Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Avanzando";
+    $('.submit').prop('disabled', true);
+    $('.submit').prop('title', 'El robot no puede estar avanzando');
   });
   $('#Detener').click(function(){
     $('#Detener').addClass("hidden");
@@ -16,6 +18,8 @@ $(function(){
     $('#No_Reset').addClass("hidden");
     $('#Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
+    $('.submit').prop('disabled', false);
+    $('.submit').prop('title', "");
   });
   $('#Entrenar').click(function(){
     $('#Entrenar').addClass("hidden");
@@ -25,6 +29,8 @@ $(function(){
     $('#Reset').addClass("hidden");
     $('#No_Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Entrenando";
+    $('.submit').prop('disabled', true);
+    $('.submit').prop('title', 'El robot no puede estar entrenando');
   });
   $('#Finalizar').click(function(){
     $('#Finalizar').addClass("hidden");
@@ -34,6 +40,8 @@ $(function(){
     $('#No_Reset').addClass("hidden");
     $('#Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
+    $('.submit').prop('disabled', false);
+    $('.submit').prop('title', "");
   });
   $('#abrir_menu').click(function(e){
     $('#oscuridad').fadeIn(1000);

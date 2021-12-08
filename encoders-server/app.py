@@ -142,6 +142,7 @@ def index():
 			(utilizando los valores del	formulario o seteando los valores por defecto según se indique)
 		Además envía algunos parámetros a la vista como la tabla Q inicial y los parámetros iniciales.
 	'''
+	App.detener()
 	if request.method == 'POST':
 		if 'aplicar' in request.form:
 			App.Q.set_params(
