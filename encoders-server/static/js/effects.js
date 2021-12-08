@@ -35,17 +35,32 @@ $(function(){
     $('#Reset').removeClass("hidden");
     var contenido = document.getElementById("Estado").innerText = "Estado: Detenido";
   });
-  $('#abrir_menu').click(function(){
+  $('#abrir_menu').click(function(e){
+    $('#oscuridad').fadeIn(1000);
     $('#menu').removeClass("hidden");
     $('#menu').removeClass("fadeOutRight");
     $('#menu').addClass("fadeInRight");
+
+    e.stopPropagation();
+
+    $('#menu').click(function (e) {
+        e.stopPropagation();
+    });
+    $("html").click(function() {
+      $('#oscuridad').fadeOut(1000);
+      $('#menu').removeClass("hidden");
+      $('#menu').removeClass("fadeInRight");
+      $('#menu').addClass("fadeOutRight");    
+    });
   })
   $('#cerrar_menu').click(function(){
+    $('#oscuridad').fadeOut(1000);
     $('#menu').removeClass("hidden");
     $('#menu').removeClass("fadeInRight");
     $('#menu').addClass("fadeOutRight");
   })
 })
+
 
 // OTRA ALTERNATIVA 
 function estado_avanzando(){
