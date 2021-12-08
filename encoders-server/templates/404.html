@@ -2,6 +2,10 @@
 
 {% block title %} {{ data.titulo }} {% endblock %}
 
+{% block css_imports%}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/404.css') }}">
+{% endblock %}
+
 {% block body %}
 	<div class="header">
 		<h1> Crawler-bot </h1>
@@ -37,6 +41,6 @@
 {% endblock %}
 
 {% block js_imports %}
-	<script src="{{ url_for('static', filename = 'js/layout.js') }}"></script>
+	<!-- No requiere Javascript -->
 {% endblock %}
 

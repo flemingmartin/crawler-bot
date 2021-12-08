@@ -2,6 +2,14 @@
 
 {% block title %} {{ data.titulo }} {% endblock %}
 
+
+{% block css_imports%}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/tabla.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/input_number.css') }}">
+{% endblock %}
+
+
 {% block body %}
 
 	<div id="oscuridad">
@@ -49,7 +57,7 @@
 		<div class="bloque_izquierda">			
 			<h2 class="tablaq_title"> Tabla Q </h2>
 			<div class="tabla" id="tabla">
-				<div class="x2 y1" id="estado"></div>
+				<div class="x1 y1" id="estado"></div>
 				{% for _ in range(3) %}
 				    <div class="row">
 				      {% for _ in range(3)%}
@@ -112,7 +120,7 @@
 
 {% block js_imports %}
 	<script src="{{ url_for('static', filename = 'js/input_number.js') }}"> </script>
-	<script src="{{ url_for('static', filename = 'js/layout.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/tabla.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/effects.js') }}"> </script>
 	<script> update_table({{ data.q_table }}, {{data.state}}) </script>

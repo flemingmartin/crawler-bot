@@ -6,18 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
-
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/tabla.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/input_number.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/animated_background.css') }}">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/404.css') }}">
-
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/animated_background.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 
-	<link rel="icon" href="{{ url_for('static', filename='images/Logo.png') }}">
+	{% block css_imports%}
+	{% endblock %}
+
 	<link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
