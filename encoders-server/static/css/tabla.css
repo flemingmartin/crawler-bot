@@ -106,27 +106,32 @@
 
 
 .tabla #estado{
-  width: 10px;
-  height: 10px;
+  --tam_punto: 4%;
+  width: var(--tam_punto);
+  height: var(--tam_punto);
   background: red;
+  border: 2px solid black;
+  border-radius: 50%;
   z-index: 1;
   position: absolute;
+
+  --desp:  calc(var(--tam_punto) / 2);
 }
 .tabla .x0{
-  left: calc(var(--border_size) - 5px);
+  left: calc(var(--border_size) - var(--desp));
 }
 .tabla .x1{
-  left: calc((var(--border_size) * 3) - 5px);
+  left: calc((var(--border_size) * 3) - var(--desp));
 }
 .tabla .x2{
-  left: calc((var(--border_size) * 5) - 5px);
+  left: calc((var(--border_size) * 5) - var(--desp));
 }
 .tabla .y0{
-  top: calc(var(--border_size) - 5px);
+  top: calc(var(--border_size) - var(--desp));
 }
 .tabla .y1{
-  top: calc((var(--border_size) * 3) - 5px);
+  top: calc((var(--border_size) * 3) - var(--desp));
 }
 .tabla .y2{
-  top: calc((var(--border_size) * 5) - 5px);
+  top: calc((var(--border_size) * 5) - var(--desp));
 }

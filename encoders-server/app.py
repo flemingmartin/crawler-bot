@@ -140,7 +140,7 @@ class App:
 		self.entrada_db.query.update({"q_table" : q_table})
 		db.session.commit()
 
-		self.js.update_table(list(q_table.flatten()),[1,1]) #OJO AL TEJO
+		self.js.update_table(list(q_table.flatten()), list(self.Q.robot.reset()))
 
 
 @app.route('/', methods=['GET','POST'])
