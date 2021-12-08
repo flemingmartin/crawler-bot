@@ -43,6 +43,8 @@ class App:
 		producidos en la interfaz web como si de javascript se tratara. 
 		De igual manera, permite la ejecución de las funciones de javascript 
 		creadas, accediendo mediante self.js. 
+		Aporta métodos a la vista para la ejecución de las funciones del 
+		algoritmo Q-Learning, así como las del movimiento del robot.
 	'''
 
 	def __init__(self):
@@ -50,10 +52,11 @@ class App:
 			Constructor de la clase App.
 			Almacena una instancia de la clase QLearning y carga una tabla Q
 			desde la base de datos para almacenarla como tabla inicial.
+			Si la entrada no se encuentra creada o la base de datos está vacía se crea
+			dicha entrada y/o se almacena una tabla Q vacía (con todos sus valores en 0).
 		'''
 		self.Q = QLearning(self)
-		self.llave = 0;
-		self.contador = 0
+
 		if "qtable" in db.inspect(db.engine).get_table_names(): # Si la tabla existe en la base de datos
 			database = QTable.query.all()
 
@@ -83,10 +86,13 @@ class App:
 			Función que inicia el entrenamiento y guarda la tabla Q que ha 
 			sido generada tras la ejecución del mismo, en la base de datos.
 		'''
-		self.js.estado_entrenando()
-		self.iniciado = 1
+		#self.js.estado_entrenando()
+		# self.iniciado = 1
 
-		self.Q.done=False
+		self.Q.semaforo_done.acquire()
+		self.Q.done = False
+		self.Q.semaforo_done.release()
+
 		q_table = self.Q.entrenar()
 		
 		self.entrada_db.query.update({"q_table" : q_table})
@@ -99,10 +105,13 @@ class App:
 			que se encuentra almacenada en la variable Q. Que puede ser una
 			recientemente entrenada o la cargada inicialmente desde la BD. 
 		'''
-		self.js.estado_avanzando()
-		self.iniciado = 2
+		#self.js.estado_avanzando()
+		# self.iniciado = 2
 
-		self.Q.done=False
+		self.Q.semaforo_done.acquire()
+		self.Q.done = False
+		self.Q.semaforo_done.release()
+
 		self.Q.avanzar()
 
 
@@ -110,16 +119,20 @@ class App:
 		'''
 			Detener la ejecución del entrenamiento o del movimiento segun corresponda.
 		'''
-		if self.iniciado == 1:
-			self.js.estado_detenido_finalizar()
-		elif self.iniciado == 2:
-			self.js.estado_detenido_entrenar()
-		self.Q.done=True
+		# if self.iniciado == 1:
+			#self.js.estado_detenido_finalizar()
+		# elif self.iniciado == 2:
+			#self.js.estado_detenido_entrenar()
 
+		self.Q.semaforo_done.acquire()
+		self.Q.done=True
+		self.Q.semaforo_done.release()
+		
 
 	def reset_table(self):
 		'''
-			Función que resetea toda la tabla a 0 en Q y la actualiza en la interfaz.
+			Función que resetea toda la tabla Q a 0 en Q,
+			la actualiza en la interfaz y en la base de datos.
 		'''
 		self.Q.inicializar_q_table()
 		q_table = self.Q.q_table
@@ -134,8 +147,11 @@ class App:
 def index():
 	'''
 		Metodo correspondiente a la ruta "/" de la web.
-		Se carga una entrada de la tabla para ser mostrada en la interfaz,
-		además se pasan algunos parámetros a la vista. 
+		Se encarga de la gestión del formulario de actualización de los parámetros de entrenamiento.
+			Si esta ruta es accedida mediante el método GET, muestra normalmente el contenido del index
+			En cambio, si se realiza mediante el método POST, además actualiza los parámetros de entrenamiento
+			(utilizando los valores del	formulario o seteando los valores por defecto según se indique)
+		Además envía algunos parámetros a la vista como la tabla Q inicial y los parámetros iniciales.
 	'''
 	if request.method == 'POST':
 		if 'aplicar' in request.form:
@@ -159,7 +175,6 @@ def index():
 	state = App.Q.robot.state
 	data={
 		'titulo': 'Crawler Server',
-		'bienvenida': 'Crawler-bot',
 		'q_table': list(q_table.flatten()),
 		'config': config,
 		'state': state
@@ -180,6 +195,9 @@ def pagina_no_encontrada(error):
 if __name__=='__main__':
 	'''
 		Programa principal
+
+		Registra el manejador de error 404.
+		Levanta el servidor de Flask en la dirección IP correspondiente.
 	'''
 	app.register_error_handler(404, pagina_no_encontrada)
 	if _raspi:

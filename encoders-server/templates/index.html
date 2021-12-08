@@ -4,7 +4,7 @@
 
 {% block body %}
 	<div class="header">
-		<h1>{{ data.bienvenida }} </h1>
+		<h1> Crawler-bot </h1>
 		<img src="static/images/Logo.png" class="logo">
 		<img src="static/images/menu.png" class="menu_button" id="abrir_menu"></img>
 	</div>
@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="cuerpo">
-			<form method="POST">
+			<form method="POST" style="padding-bottom: 5%;">
 
 				{% from "_input_number.html" import show_input %}
 
@@ -74,7 +74,7 @@
 				<button id=No_Avanzar class="deshabilitado hidden button">Avanzar</button>
 				<button id=Detener class="zoom_button hidden button detener_button" onclick='server.detener()'>Detener</button>
 				
-				<button id=Entrenar class="zoom_button button entrenar_button" onclick='server.entrenar({{data.contador}})'>Entrenar</button>
+				<button id=Entrenar class="zoom_button button entrenar_button" onclick='server.entrenar()'>Entrenar</button>
 				<button id=No_Entrenar class="deshabilitado hidden button">Entrenar</button>
 				<button id=Finalizar class="zoom_button hidden button finalizar_button" onclick='server.detener()'>Detener</button>
 				
@@ -104,7 +104,6 @@
 		</div>
 	</div>
 
-	<!-- <center style="padding-bottom:2em"><h1 id="llave">{{data.contador}}</h1></center> -->
 {% endblock %}
 
 {% block js_imports %}
