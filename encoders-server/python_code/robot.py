@@ -41,6 +41,7 @@ class Robot():
 		self.recompensa_dead = recompensa_dead
 		self.semaforo_recompensa = Semaphore(1)
 		self.semaforo_flag_bloqueo = Semaphore(1)
+		self.state = [1,1]
 
 
 	def reset(self):

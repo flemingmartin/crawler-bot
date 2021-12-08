@@ -127,7 +127,7 @@ class App:
 		self.entrada_db.query.update({"q_table" : q_table})
 		db.session.commit()
 
-		self.js.update_table(list(q_table.flatten()))
+		self.js.update_table(list(q_table.flatten()),[1,1]) #OJO AL TEJO
 
 
 @app.route('/', methods=['GET','POST'])
@@ -156,11 +156,13 @@ def index():
 
 	q_table = App.Q.q_table
 	config = App.Q.get_params()
+	state = App.Q.robot.state
 	data={
 		'titulo': 'Crawler Server',
 		'bienvenida': 'Crawler-bot',
 		'q_table': list(q_table.flatten()),
-		'config': config
+		'config': config,
+		'state': state
 	}
 	return App.render(render_template('index.html', data=data))
 

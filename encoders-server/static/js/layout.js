@@ -1,15 +1,16 @@
-function update_table(new_weights){
+function update_table(new_weights, state){
 
 	var t = document.getElementById("tabla");
 	var aux = [0,0,0,0]
-	for(var i=0; i<t.childElementCount; i++){
-		row = t.children[i];
+	var rows = t.getElementsByClassName("row");
+	for(var i=0; i<rows.length; i++){
+		var row = rows[i];
 		for (var j=0; j<row.childElementCount; j++){
-			box = row.children[j];
-			numeros = box.getElementsByClassName('numero');
-			box_style = box.getElementsByClassName('box_style')[0];
+			var box = row.children[j];
+			var numeros = box.getElementsByClassName('numero');
+			var box_style = box.getElementsByClassName('box_style')[0];
 			for (var k=0; k<numeros.length; k++){
-				nuevo_numero = new_weights[k + j*numeros.length + i*numeros.length*row.childElementCount];
+				var nuevo_numero = new_weights[k + j*numeros.length + i*numeros.length*row.childElementCount];
 				numeros[k].innerHTML = nuevo_numero.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
 				aux[k] = nuevo_numero;
 			}
@@ -19,4 +20,15 @@ function update_table(new_weights){
 			box_style.style.borderRightColor = "rgb("+Math.max(aux[3]*-25,0)+","+Math.max(aux[3]*25,0)+","+aux[3]+")";
 		}
 	}
+	
+	update_state(state);
+}
+
+function update_state(state){
+	var x_clases = ["x0","x1","x2"];
+	var y_clases = ["y0","y1","y2"];
+	var estado = document.getElementById("estado");
+	estado.className = "";
+	estado.classList.add(x_clases[state[1]]);
+	estado.classList.add(y_clases[state[0]]);
 }

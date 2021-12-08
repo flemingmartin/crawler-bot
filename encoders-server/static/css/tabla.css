@@ -26,9 +26,11 @@
   }
 }
 .tabla{
+  --border_size: calc(var(--table_size)/6);
   width: var(--table_size);
   height: var(--table_size);
   margin-left: calc((100% - var(--table_size)) / 2);
+  position: relative;
 }
 
 .box{
@@ -39,7 +41,7 @@
 }
 
 .box .box_style{
-  --border_size: calc(var(--table_size)/6);
+  /*--border_size: calc(var(--table_size)/6);*/
   width: 0;
   height: 0;
   box-sizing: border-box;
@@ -100,4 +102,31 @@
 .box .abajo{
   right: 15%;
   top: 40%;
+}
+
+
+.tabla #estado{
+  width: 10px;
+  height: 10px;
+  background: red;
+  z-index: 1;
+  position: absolute;
+}
+.tabla .x0{
+  left: calc(var(--border_size) - 5px);
+}
+.tabla .x1{
+  left: calc((var(--border_size) * 3) - 5px);
+}
+.tabla .x2{
+  left: calc((var(--border_size) * 5) - 5px);
+}
+.tabla .y0{
+  top: calc(var(--border_size) - 5px);
+}
+.tabla .y1{
+  top: calc((var(--border_size) * 3) - 5px);
+}
+.tabla .y2{
+  top: calc((var(--border_size) * 5) - 5px);
 }
