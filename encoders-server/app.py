@@ -86,9 +86,6 @@ class App:
 			Función que inicia el entrenamiento y guarda la tabla Q que ha 
 			sido generada tras la ejecución del mismo, en la base de datos.
 		'''
-		#self.js.estado_entrenando()
-		# self.iniciado = 1
-
 		self.Q.semaforo_done.acquire()
 		self.Q.done = False
 		self.Q.semaforo_done.release()
@@ -105,9 +102,6 @@ class App:
 			que se encuentra almacenada en la variable Q. Que puede ser una
 			recientemente entrenada o la cargada inicialmente desde la BD. 
 		'''
-		#self.js.estado_avanzando()
-		# self.iniciado = 2
-
 		self.Q.semaforo_done.acquire()
 		self.Q.done = False
 		self.Q.semaforo_done.release()
@@ -119,11 +113,6 @@ class App:
 		'''
 			Detener la ejecución del entrenamiento o del movimiento segun corresponda.
 		'''
-		# if self.iniciado == 1:
-			#self.js.estado_detenido_finalizar()
-		# elif self.iniciado == 2:
-			#self.js.estado_detenido_entrenar()
-
 		self.Q.semaforo_done.acquire()
 		self.Q.done=True
 		self.Q.semaforo_done.release()
