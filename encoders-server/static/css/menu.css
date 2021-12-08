@@ -56,16 +56,6 @@
   background: #d4d4d4;
 }
 
-@media (max-width: 1000px){
-	#menu{
-		width: 100%;
-		min-width: auto;
-		overflow-y: scroll;
-	}
-	#menu .cuerpo .input .info .info_text{
-		left: calc(var(--info_width)*-1 - 20px);
-	}
-}
 
 @keyframes fadeInRight {
    0% {
@@ -131,7 +121,8 @@
 	width: 45%;
 	margin-right: 5%;
 	text-align: right;
-	font-size: 1.5em;
+	/*font-size: 1.5em;*/
+	font-size: 16px;
 }
 #menu .cuerpo .input .info{
 	display: inline-block;
@@ -160,7 +151,6 @@
 	border: 1px solid black;
 	position: absolute;
 	top: 0;
-	/*right: calc(var(--info_width)*-1 - 20px);*/
 	left: calc(var(--info_width)*-1 - 20px);
 	padding: 15px;
 	box-sizing: border-box;
@@ -185,4 +175,14 @@
 	height: 100%;
 	display: none;
 	opacity: 0.8;	
+}
+@media (max-width: 1000px){
+	#menu{
+		width: 100%;
+		min-width: auto;
+		overflow-y: scroll;
+	}
+	#menu .cuerpo .input .info .info_text{
+		--info_width: 50vw;
+	}
 }
