@@ -22,18 +22,8 @@ class QLearning():
 		self.ACTIONS = 4 					# Número de acciones posibles
 		self.STATE_SIZE = (3,3)				# Cantidad de estados posibles
 
-		self.LEARNING_RATE = 0.4			# Tasa de aprendizaje del modelo
-		self.DISCOUNT = 0.9					# Factor de descuento de recompensas futuras
-		self.EPSILON = 0.9					# Factor de aleatoriedad del modelo
-		self.LEARNING_EPSILON = 0.002 		# Descuento de aleatoriedad
-		self.MIN_EPSILON = 0.15				# Minima aleatoriedad
-		self.MAX_MOVEMENTS = 15				# Maximos movimientos del brazo sin obtener recompensa
-		
-		# Posibles recompensas del entrenamiento
-		self.WIN_REWARD = 4				# Recompensa obtenida al avanzar
-		self.LOSS_REWARD = -4			# Recompensa obtenida al retroceder
-		self.DEAD_REWARD = -4			# Recompensa obtenida al realizar un movimiento no permitido
-		self.LOOP_REWARD = -4			# Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa
+		# Configuración de parámetros de entrenamiento
+		self.set_default_params()
 
 		# Variable asociada a jyserver
 		self.app = app
@@ -77,18 +67,31 @@ class QLearning():
 
 			Establece
 			----------
-				learning_rate (float): 0.4
-				discount (float): 0.9
-				epsilon (float): 0.9
-				learning_epsilon (float): 0.002
-				min_epsilon (float): 0.15
-				max_movements (int): 15
-				win_reward (int): 4
-				loss_reward (int): -4
-				dead_reward (int): -4
-				loop_reward (int): -4
+				learning_rate (float): 0.4		 - Tasa de aprendizaje del modelo
+				discount (float): 0.9			 - Factor de descuento de recompensas futuras
+				epsilon (float): 0.9			 - Factor de aleatoriedad del modelo
+				learning_epsilon (float): 0.002	 - Descuento de aleatoriedad
+				min_epsilon (float): 0.15		 - Minima aleatoriedad
+				max_movements (int): 15			 - Maximos movimientos del brazo sin obtener recompensa
+				win_reward (int): 4				 - Recompensa obtenida al avanzar
+				loss_reward (int): -4			 - Recompensa obtenida al retroceder
+				dead_reward (int): -4			 - Recompensa obtenida al realizar un movimiento no permitido
+				loop_reward (int): -4			 - Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa
 		'''
-		self.set_params(0.4,0.9,0.9,0.002,0.15,15,4,-4,-4,-4)
+		# Parámetros de entrenamiento
+		LEARNING_RATE = 0.4			
+		DISCOUNT = 0.9				
+		EPSILON = 0.9				
+		LEARNING_EPSILON = 0.002 	
+		MIN_EPSILON = 0.15			
+		MAX_MOVEMENTS = 15			
+		
+		# Posibles recompensas del entrenamiento
+		WIN_REWARD = 4				
+		LOSS_REWARD = -4			
+		DEAD_REWARD = -4			
+		LOOP_REWARD = -4			
+		self.set_params(LEARNING_RATE,DISCOUNT,EPSILON,LEARNING_EPSILON,MIN_EPSILON,MAX_MOVEMENTS,WIN_REWARD,LOSS_REWARD,DEAD_REWARD,LOOP_REWARD)
 
 
 	def get_params(self):
