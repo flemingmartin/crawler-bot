@@ -7,6 +7,7 @@ import random
   
 from python_code.q_learning import QLearning
 from python_code.robot import _raspi
+import python_code.constantes as const
 
 # Si se está ejecutando en una Raspi, 
 # determinar si es en producción (False - mediante Access Point)
@@ -81,6 +82,7 @@ class App:
 			db.session.add(self.entrada_db)
 			db.session.commit()
 
+
 	def entrenar(self):
 		'''
 			Función que inicia el entrenamiento y guarda la tabla Q que ha 
@@ -140,34 +142,106 @@ def index():
 			Si esta ruta es accedida mediante el método GET, muestra normalmente el contenido del index
 			En cambio, si se realiza mediante el método POST, además actualiza los parámetros de entrenamiento
 			(utilizando los valores del	formulario o seteando los valores por defecto según se indique)
+			Realiza validaciones de valores máximos y mínimos de estos parámetros
 		Además envía algunos parámetros a la vista como la tabla Q inicial y los parámetros iniciales.
 	'''
 	App.detener()
+	check = 0
+	alertas = []
 	if request.method == 'POST':
-		if 'aplicar' in request.form:
-			App.Q.set_params(
-				float(request.form['learning_rate']),
-				float(request.form['discount_factor']),
-				float(request.form['epsilon']),
-				float(request.form['learning_epsilon']),
-				float(request.form['min_epsilon']),
-				int(request.form['max_movements']),
-				int(request.form['win_reward']),
-				int(request.form['loss_reward']),
-				int(request.form['dead_reward']),
-				int(request.form['loop_reward'])
-			)
-		elif 'reset' in request.form:
+		if 'aplicar' in request.form: # Si se ha clickeado en el botón aplicar
+
+			# Se reciben los parámetros del modelo desde el formulario
+			learning_rate = float(request.form['learning_rate'])
+			discount_factor = float(request.form['discount_factor'])
+			epsilon = float(request.form['epsilon'])
+			learning_epsilon = float(request.form['learning_epsilon'])
+			min_epsilon = float(request.form['min_epsilon'])
+			max_movements = int(request.form['max_movements'])
+			win_reward = int(request.form['win_reward'])
+			loss_reward = int(request.form['loss_reward'])
+			dead_reward = int(request.form['dead_reward'])
+			loop_reward = int(request.form['loop_reward'])
+
+			# Checkeo de los valores mínimos y máximos recibidos, crea alertas
+			check = 1
+			i = 0
+
+			if not(learning_rate>const.minimos[i] and learning_rate<const.maximos[i]):
+				alertas.append(f"Learning Rate fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(discount_factor>const.minimos[i] and discount_factor<const.maximos[i]):
+				alertas.append(f"Discount Factor fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(epsilon>const.minimos[i] and epsilon<const.maximos[i]):
+				alertas.append(f"Epsilon fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(learning_epsilon>const.minimos[i] and learning_epsilon<const.maximos[i]):
+				alertas.append(f"Learning Epsilon fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(min_epsilon>const.minimos[i] and min_epsilon<const.maximos[i]):
+				alertas.append(f"Min Epsilon fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(max_movements>const.minimos[i] and max_movements<const.maximos[i]):
+				alertas.append(f"Max Movements fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(win_reward>const.minimos[i] and win_reward<const.maximos[i]):
+				alertas.append(f"Win Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(loss_reward>const.minimos[i] and loss_reward<const.maximos[i]):
+				alertas.append(f"Loss Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(dead_reward>const.minimos[i] and dead_reward<const.maximos[i]):
+				alertas.append(f"Dead Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+			i+=1
+			if not(loop_reward>const.minimos[i] and loop_reward<const.maximos[i]):
+				alertas.append(f"Loop Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
+				check = -1
+
+			if check == 1: # Si no hay errores, actualiza los parámetros y envia la anecdota 
+				App.Q.set_params(
+					learning_rate,
+					discount_factor,
+					epsilon,
+					learning_epsilon,
+					min_epsilon,
+					max_movements,
+					win_reward,
+					loss_reward,
+					dead_reward,
+					loop_reward
+				)
+				alertas.append("Parámetros actualizados satisfactoriamente")
+
+		elif 'reset' in request.form: # Si se ha clickeado en el botón resetear
 			App.Q.set_default_params()
+			check = 1
+			alertas.append("Parámetros actualizados satisfactoriamente")
 
 	q_table = App.Q.q_table
 	config = App.Q.get_params()
 	state = App.Q.robot.state
+
+	# Parámetros enviados a la vista
 	data={
 		'titulo': 'Crawler Server',
 		'q_table': list(q_table.flatten()),
 		'config': config,
-		'state': state
+		'state': state,
+		'check': check,
+		'alertas': alertas,
+		'minimos': const.minimos,
+		'maximos': const.maximos,
+		'steps': const.steps
 	}
 	return App.render(render_template('index.html', data=data))
 

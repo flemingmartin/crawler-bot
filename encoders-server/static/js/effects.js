@@ -66,7 +66,7 @@ $(function(){
 		$('.submit').prop('disabled', false);
 		$('.submit').prop('title', "");
 	});
-	$('#abrir_menu').click(function(e){
+	$('#abrir_menu').click(function(){
 		/*
 			Al hacer click en el botón de menú, se realiza la animación de apertura
 
@@ -77,12 +77,7 @@ $(function(){
 		$('#menu').removeClass("fadeOutRight");
 		$('#menu').addClass("fadeInRight");
 
-		e.stopPropagation();
-
-		$('#menu').click(function (e) {
-			e.stopPropagation();
-		});
-		$("html").click(function() {
+		$("#oscuridad").click(function() {
 			$('#oscuridad').fadeOut(1000);
 			$('#menu').removeClass("hidden");
 			$('#menu').removeClass("fadeInRight");
@@ -99,3 +94,30 @@ $(function(){
 		$('#menu').addClass("fadeOutRight");
 	})
 })
+
+function desaparecer_alerta(numero){
+	/*
+		Función que cierra la alerta correspondiente a la indicada por el parámetro numero, 
+		el cual hace referencia a la posición que ésta tiene dentro de la lista de elementos 'alert'. 
+	*/
+	alertas = document.getElementsByClassName('alert');
+	alerta = alertas[numero];
+	$(alerta).fadeOut(200);
+}
+
+function abrir_menu(){
+		/*
+			Función encargada de hacer aparecer el menú, sin ejecutar 
+			la animación de apertura del mismo.
+		*/
+		$('#oscuridad').fadeIn(0);
+		$('#menu').removeClass("hidden");
+		$('#menu').removeClass("fadeOutRight");
+
+		$("#oscuridad").click(function() {
+			$('#oscuridad').fadeOut(1000);
+			$('#menu').removeClass("hidden");
+			$('#menu').removeClass("fadeInRight");
+			$('#menu').addClass("fadeOutRight");    
+		});
+}

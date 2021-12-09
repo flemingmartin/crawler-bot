@@ -3,11 +3,13 @@
 <!-- Titulo de la página -->
 {% block title %} {{ data.titulo }} {% endblock %}
 
+
 <!-- Importación de archivos css propios de index -->
 {% block css_imports%}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/tabla.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/input_number.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/alert.css') }}">
 {% endblock %}
 
 
@@ -30,29 +32,50 @@
 		</div>
 
 		<div class="cuerpo">
+			<!-- Alertas de actualización de parámetros -->
+				{% if data.check == 1%}
+					<div class="contenedor_alertas">
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							<div class="alert-text">{{ data.alertas[0] }}</div>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="desaparecer_alerta(0)">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+				{% elif data.check == -1 %}
+					<div class="contenedor_alertas">
+						{% for i in range(0, data.alertas|length) %}
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<div class="alert-text">{{ data.alertas[i] }}</div>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="desaparecer_alerta({{ i }})">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
 			<form method="POST" style="padding-bottom: 5%;">
 
 				{% from "_input_number.html" import show_input %}
 
-				<!-- 			Label Name			Input Name 		  Step  Min  Max     Value	 -->
-				{{ show_input("Learning Rate",    "learning_rate",      0.1,   0,   2, data.config[0], "Indica la tasa de aprendizaje del modelo. Valor por defecto: 0.4") }}
-				{{ show_input("Discount Factor",  "discount_factor",    0.1,   0,   2, data.config[1], "Factor de descuento. Valor por defecto: 0.9") }}
-				{{ show_input("Epsilon", 		  "epsilon", 		    0.1,   0,   1, data.config[2], "Factor de aleatoriedad. Valor por defecto: 0.9") }}
-				{{ show_input("Learning Epsilon", "learning_epsilon", 0.001,   0, 0.9, data.config[3], "Tasa de descuento del factor de aleatoriedad. Valor por defecto: 0.002") }}
-				{{ show_input("Min Epsilon", 	  "min_epsilon", 	   0.01,   0, 0.9, data.config[4], "Valor mínimo de aleatoriedad del modelo. Valor por defecto: 0.15") }}
-				{{ show_input("Max Movements", 	  "max_movements", 	      1,  10, 100, data.config[5], "Maximos movimientos del brazo sin obtener recompensa. Valor por defecto: 15") }}
+				<!-- 		  Label Name		  Input Name 		  Step  		 Min  			  Max     		   Value	 -->
+				{{ show_input("Learning Rate",    "learning_rate",    data.steps[0], data.minimos[0], data.maximos[0], data.config[0], "Indica la tasa de aprendizaje del modelo. Valor por defecto: 0.4") }}
+				{{ show_input("Discount Factor",  "discount_factor",  data.steps[1], data.minimos[1], data.maximos[1], data.config[1], "Factor de descuento. Valor por defecto: 0.9") }}
+				{{ show_input("Epsilon", 		  "epsilon", 		  data.steps[2], data.minimos[2], data.maximos[2], data.config[2], "Factor de aleatoriedad. Valor por defecto: 0.9") }}
+				{{ show_input("Learning Epsilon", "learning_epsilon", data.steps[3], data.minimos[3], data.maximos[3], data.config[3], "Tasa de descuento del factor de aleatoriedad. Valor por defecto: 0.002") }}
+				{{ show_input("Min Epsilon", 	  "min_epsilon", 	  data.steps[4], data.minimos[4], data.maximos[4], data.config[4], "Valor mínimo de aleatoriedad del modelo. Valor por defecto: 0.15") }}
+				{{ show_input("Max Movements", 	  "max_movements", 	  data.steps[5], data.minimos[5], data.maximos[5], data.config[5], "Maximos movimientos del brazo sin obtener recompensa. Valor por defecto: 15") }}
 				<br>
-				{{ show_input("Win Reward",  	  "win_reward",  	      1, -50,  50, data.config[6], "Recompensa obtenida al avanzar. Valor por defecto: 4") }}
-				{{ show_input("Loss Reward", 	  "loss_reward", 	      1, -50,  50, data.config[7], "Recompensa obtenida al retroceder. Valor por defecto: -4") }}
-				{{ show_input("Dead Reward", 	  "dead_reward", 	      1, -50,  50, data.config[8], "Recompensa obtenida al realizar un movimiento no permitido. Valor por defecto: -4") }}
-				{{ show_input("Loop Reward", 	  "loop_reward", 	      1, -50,  50, data.config[9], "Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa. Valor por defecto: -4") }}
+				{{ show_input("Win Reward",  	  "win_reward",  	  data.steps[6], data.minimos[6], data.maximos[6], data.config[6], "Recompensa obtenida al avanzar. Valor por defecto: 4") }}
+				{{ show_input("Loss Reward", 	  "loss_reward", 	  data.steps[7], data.minimos[7], data.maximos[7], data.config[7], "Recompensa obtenida al retroceder. Valor por defecto: -4") }}
+				{{ show_input("Dead Reward", 	  "dead_reward", 	  data.steps[8], data.minimos[8], data.maximos[8], data.config[8], "Recompensa obtenida al realizar un movimiento no permitido. Valor por defecto: -4") }}
+				{{ show_input("Loop Reward", 	  "loop_reward", 	  data.steps[9], data.minimos[9], data.maximos[9], data.config[9], "Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa. Valor por defecto: -4") }}
 
 				<input type="submit" value="Aplicar" class="submit" name="aplicar">
 				<input type="submit" value="Resetear" class="submit" name="reset">
 			</form>
 		</div>
 	</div>
-
 
 
 	<div id="pagina" class="main_div">
@@ -79,7 +102,27 @@
 		
 		<div class="bloque_derecha">
 			<div class="bloque_derecha_superior">
-		      <h3 id="Estado">Estado: Detenido</h3>
+
+				<!-- Alertas de actualización de parámetros 
+				{% if data.check == 1%}
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<div class="alert-text">{{ data.alertas[0] }}</div>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="desaparecer_alerta(0)">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{% elif data.check == -1 %}
+					{% for i in range(0, data.alertas|length) %}
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<div class="alert-text">{{ data.alertas[i] }}</div>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="desaparecer_alerta({{ i }})">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					{% endfor %}
+				{% endif %} -->
+
+		      	<h3 id="Estado">Estado: Detenido</h3>
 		  	</div>
 		  	
 			<div class="botones">
@@ -121,9 +164,9 @@
 
 <!-- Importación de archivos js propios del index -->
 {% block js_imports %}
-	<script src="{{ url_for('static', filename = 'js/input_number.js') }}"> </script>
 	<script src="{{ url_for('static', filename = 'js/tabla.js') }}"></script>
-	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/effects.js') }}"> </script>
+	<script src="{{ url_for('static', filename = 'js/input_number.js') }}"> </script>
 	<script> update_table({{ data.q_table }}, {{data.state}}) </script>
+	<script> {% if data.check != 0%} abrir_menu() {% endif %} </script>
 {% endblock %}

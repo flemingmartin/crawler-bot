@@ -13,6 +13,9 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
 
+	<!-- Se importa JQuery -->
+	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
+
 	<!-- Importación de archivos css propios de la página -->
 	{% block css_imports%}
 	{% endblock %}
