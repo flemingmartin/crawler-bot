@@ -39,7 +39,10 @@
 				*/
 				var value = parseFloat(el[0].value);
 				var new_value = value-step;
-				if (new_value > min){
+				if (new_value >= min){
+					if (new_value > max){
+						new_value = parseFloat(max);
+					}
 					el[0].value = new_value.toFixed(presicion);
 				}
 		  	}
@@ -51,7 +54,10 @@
 				*/
 				var value = parseFloat(el[0].value);
 				var new_value = value+step;
-				if (new_value < max){
+				if (new_value <= max){
+					if (new_value < min){
+						new_value = parseFloat(min);
+					}
 					el[0].value = new_value.toFixed(presicion);
 				}
 			}

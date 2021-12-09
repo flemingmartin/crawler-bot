@@ -54,7 +54,7 @@
 						{% endfor %}
 					</div>
 				{% endif %}
-			<form method="POST" action="{{ url_for('actualizar_parametros') }}" style="padding-bottom: 5%;">
+			<form method="POST" action="{{ url_for('actualizar_parametros') }}">
 
 				{% from "_input_number.html" import show_input %}
 
@@ -72,6 +72,9 @@
 				{{ show_input("Loop Reward", 	  "loop_reward", 	  data.steps[9], data.minimos[9], data.maximos[9], data.config[9], "Recompensa obtenida al realizar movimientos reiterados sin obtener recompensa. Valor por defecto: -4") }}
 
 				<input type="submit" value="Aplicar" class="submit" name="aplicar">
+				
+			</form>
+			<form method="POST" action="{{ url_for('actualizar_parametros') }}" style="padding-bottom: 5%;">
 				<input type="submit" value="Resetear" class="submit" name="reset">
 			</form>
 		</div>

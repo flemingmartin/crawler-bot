@@ -193,53 +193,53 @@ def actualizar_parametros():
 		epsilon = float(request.form['epsilon'])
 		learning_epsilon = float(request.form['learning_epsilon'])
 		min_epsilon = float(request.form['min_epsilon'])
-		max_movements = int(request.form['max_movements'])
-		win_reward = int(request.form['win_reward'])
-		loss_reward = int(request.form['loss_reward'])
-		dead_reward = int(request.form['dead_reward'])
-		loop_reward = int(request.form['loop_reward'])
+		max_movements = int(float(request.form['max_movements']))
+		win_reward = int(float(request.form['win_reward']))
+		loss_reward = int(float(request.form['loss_reward']))
+		dead_reward = int(float(request.form['dead_reward']))
+		loop_reward = int(float(request.form['loop_reward']))
 
 		# Checkeo de los valores mínimos y máximos recibidos, crea alertas
 		App.check = 1
 		i = 0
 
-		if not(learning_rate>const.minimos[i] and learning_rate<const.maximos[i]):
+		if not(learning_rate>=const.minimos[i] and learning_rate<=const.maximos[i]):
 			App.alertas.append(f"Learning Rate fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(discount_factor>const.minimos[i] and discount_factor<const.maximos[i]):
+		if not(discount_factor>=const.minimos[i] and discount_factor<=const.maximos[i]):
 			App.alertas.append(f"Discount Factor fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(epsilon>const.minimos[i] and epsilon<const.maximos[i]):
+		if not(epsilon>=const.minimos[i] and epsilon<=const.maximos[i]):
 			App.alertas.append(f"Epsilon fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(learning_epsilon>const.minimos[i] and learning_epsilon<const.maximos[i]):
+		if not(learning_epsilon>=const.minimos[i] and learning_epsilon<=const.maximos[i]):
 			App.alertas.append(f"Learning Epsilon fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(min_epsilon>const.minimos[i] and min_epsilon<const.maximos[i]):
+		if not(min_epsilon>=const.minimos[i] and min_epsilon<=const.maximos[i]):
 			App.alertas.append(f"Min Epsilon fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(max_movements>const.minimos[i] and max_movements<const.maximos[i]):
+		if not(max_movements>=const.minimos[i] and max_movements<=const.maximos[i]):
 			App.alertas.append(f"Max Movements fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(win_reward>const.minimos[i] and win_reward<const.maximos[i]):
+		if not(win_reward>=const.minimos[i] and win_reward<=const.maximos[i]):
 			App.alertas.append(f"Win Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(loss_reward>const.minimos[i] and loss_reward<const.maximos[i]):
+		if not(loss_reward>=const.minimos[i] and loss_reward<=const.maximos[i]):
 			App.alertas.append(f"Loss Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(dead_reward>const.minimos[i] and dead_reward<const.maximos[i]):
+		if not(dead_reward>=const.minimos[i] and dead_reward<=const.maximos[i]):
 			App.alertas.append(f"Dead Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 		i+=1
-		if not(loop_reward>const.minimos[i] and loop_reward<const.maximos[i]):
+		if not(loop_reward>=const.minimos[i] and loop_reward<=const.maximos[i]):
 			App.alertas.append(f"Loop Reward fuera de los limites: ({const.minimos[i]}, {const.maximos[i]})")
 			App.check = -1
 
