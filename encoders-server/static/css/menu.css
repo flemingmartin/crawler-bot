@@ -121,7 +121,6 @@
 	width: 45%;
 	margin-right: 5%;
 	text-align: right;
-	/*font-size: 1.5em;*/
 	font-size: 16px;
 }
 #menu .cuerpo .input .info{
@@ -155,8 +154,13 @@
 	padding: 15px;
 	box-sizing: border-box;
 	border-color: black;
+	font-size: 14px;
 	color: black;
 	background: linear-gradient(to bottom right, #00EDF5, #ABA9BF);
+	/*color: #e3e3e3;
+	background-color: black;
+	border-radius: 2px;*/
+
 }
 #menu .cuerpo .submit{
 	display: block;

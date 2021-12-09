@@ -54,7 +54,7 @@
 						{% endfor %}
 					</div>
 				{% endif %}
-			<form method="POST" style="padding-bottom: 5%;">
+			<form method="POST" action="{{ url_for('actualizar_parametros') }}" style="padding-bottom: 5%;">
 
 				{% from "_input_number.html" import show_input %}
 
