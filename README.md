@@ -31,7 +31,7 @@ El mismo consiste en un **Robot Crawler** que aprende a desplazarse utilizando u
 Si bien el programa puede ser ejecutado desde una computadora de uso personal, como si de una simulación se tratase, 
 el código de la aplicación se encuentra diseñado para la administración de un robot Crawler controlado por una Raspberry Pi.
 
-Ver **Ejecución** para conocer como desplegar el proyecto.
+Ver <a href=README.md#Ejecución>**Ejecución**</a> para conocer como desplegar el proyecto.
 
 ### Pre-requisitos 📋
 
@@ -114,7 +114,7 @@ Por lo que es recomendable agregar la inicialización del demonio en el arranque
 sudo pigpiod
 ```
 
-## Ejecución 🤖
+<A NAME="Ejecución">## Ejecución 🤖</A>
 
 Para poder ejecutar la aplicación se deberá conectar a la Raspberry Pi mediante protocolo _ssh_ y ejecutar las siguientes instrucciones:
 ```
