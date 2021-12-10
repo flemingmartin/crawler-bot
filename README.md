@@ -109,7 +109,7 @@ Se deberá contar con el interprete de Python 3 instalado en el equipo y las lib
 * Flask-SQLAlchemy:2.5.1 - Extensión para Flask que agrega compatibilidad con SQLAlchemy a la aplicación. 
 * pigpio:79 - Permite el control de los puertos de entrada/salidas de propósito general (GPIO).
 
-Muchas de estas bibliotecas son instalables mediante el instalador de Python, utilizando la instrucción _pip3 install_. 
+Muchas de estas bibliotecas son instalables mediante el instalador de Python, utilizando la instrucción ```pip3 install```. 
 A continuación los comandos a ejecutar para la instalación:
 
 ```
