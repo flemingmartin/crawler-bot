@@ -1,4 +1,4 @@
-# Título del Proyecto
+# Título del Proyecto <img src="resources/Index.png" width=8px/>
 
 _Acá va un párrafo que describa lo que es el proyecto_
 
