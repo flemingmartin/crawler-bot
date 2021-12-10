@@ -9,33 +9,33 @@
 <div align="center">
   <img src="resources/logo.png" width=15%/>
   <br>
-  <h2> Proyecto C1 - Robot Crawler - Taller de Proyecto II </h2>
+  <h2> Proyecto C1: Robot Crawler - Taller de Proyecto II - UNLP </h2>
 </div>
 
 <div align="center">
-  <h4><strong>Robot Crawler controlado por Raspberry Pi, capaz de aprender a desplazarse</strong></h4>
+  <h4><strong>Robot Crawler controlado por Raspberry Pi, capaz de aprender a desplazarse.</strong></h4>
 
   <a href="https://github.com/flemingmartin/crawler-bot"><img src="https://img.shields.io/badge/version-1.0.0-blue"/></a>
 </div>
 
 <br>
 
-En este repositorio se muestra el trabajo realizado en el transcurso de la materia **Taller de Proyecto II** en el año 2021. 
-El mismo consiste en un **Robot Crawler** que aprende a desplazarse utilizando un brazo robótico con dos grados de libertad mediante el algoritmo de aprendizaje automático reforzado Q-Learning.
+En este repositorio, se encuentra el trabajo realizado en el transcurso de la materia **Taller de Proyecto II**, perteneciente a la carrera <a href=http://ic.info.unlp.edu.ar/> **Ingeniería en Computación**</a> de la <a href=https://unlp.edu.ar/>**Universidad Nacional de La Plata**</a>, durante el año 2021. 
+El mismo consiste en un **Robot Crawler** que aprende a desplazarse utilizando un brazo robótico con dos grados de libertad mediante el algoritmo de aprendizaje automático reforzado _Q-Learning_.
 
 <p align="center"> <img src="resources/Crawler.png" width=50%/> </p>
 
 
 ## Comenzando 🚀
 
-Si bien el programa puede ser ejecutado desde una computadora de uso personal como si de una simulación se tratase, 
+Si bien el programa puede ser ejecutado desde una computadora de uso personal, como si de una simulación se tratase, 
 el código de la aplicación se encuentra diseñado para la administración de un robot Crawler controlado por una Raspberry Pi.
 
-Mirar **Ejecución** para conocer como desplegar el proyecto.
+Ver **Ejecución** para conocer como desplegar el proyecto.
 
 ### Pre-requisitos 📋
 
-A continuación se listan componentes con los que se deberá contar para la construcción del robot Crawler:
+A continuación se listan los componentes con los que se deberá contar para la construcción del robot Crawler:
 
 <table>
   <tr>
@@ -188,7 +188,7 @@ Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones
 ## Autores ✒️
 
 * **Fleming, Martin** - [GitHub](https://github.com/flemingmartin/)
-* **Morales, Hernán** - [GitLab](https://gitlab.com/hernansergiomorales)
+* **Morales, Hernán Sergio** - [GitLab](https://gitlab.com/hernansergiomorales)
 * **Saavedra, Marcos David** - [Github](https://github.com/saavedramarcosdavid)
 
 <!-- ## Licencia 📄
