@@ -118,21 +118,22 @@ A continuación los comandos a ejecutar para la instalación:
 > sudo apt-get install pigpio python-pigpio python3-pigpio
 ```
 
-_**Aclaración**: El módulo pigpio cuenta con un demonio encargado del control de los puertos GPIO, la biblioteca de Python ofrece comunicación con dicho demonio. 
-Es recomendable agregar la inicialización del demonio en el arranque del sistema. Para ello, se debe agregar en el archivo **/etc/rc.local** la instrucción:_
+_**Aclaración**: El módulo pigpio cuenta con un demonio encargado del control de los puertos GPIO de la Raspberry Pi, la biblioteca de Python ofrece comunicación con dicho demonio. 
+Es recomendable agregar la inicialización del demonio en el arranque del sistema. Además, es posible incluir la creación del servidor Flask, con el objetivo de no tener que ejecutar ambos comandos de manera remota.
+Para ello, se debe agregar en el archivo **/etc/rc.local** las siguientes instrucciones:_
 ```
-sudo pigpiod
+pigpiod   # Inicialización del demonio pigpio
+su pi -c 'python3 app.py' # Ejecución del programa principal, éste levanta el servidor Flask
 ```
 
 ## Ejecución 🤖 <A NAME="ejecucion"></A>
 
-Para poder ejecutar la aplicación, se deberá conectar a la Raspberry Pi mediante protocolo _ssh_ y ejecutar las siguientes instrucciones:
-```
-# Si no se ha incorporado la inicialización del demonio pigpio en el arranque del sistema
-sudo pigpiod
+Si se ha incorporado en el arranque del sistema las instrucciones de iniciación del demonio _pigpio_ y de creación del servidor Flask, solo resta acceder desde el navegador a la aplicación web introduciendo ```http://192.168.4.1:5000/``` en la barra de direcciones.
 
-# Ejecución del programa principal, éste levanta el servidor Flask
-python3 app.py
+En el caso de que no haber inlcuido dichas instrucciones en el arranque, para poder ejecutar la aplicación, se deberá conectar a la Raspberry Pi mediante protocolo _ssh_ y ejecutar las instrucciones que se muestran a continuación:
+```
+sudo pigpiod    # Inicialización del demonio pigpio
+python3 app.py  # Ejecución del programa principal, éste levanta el servidor Flask
 ```
 
 _**Aclaraciones**:_ 
@@ -213,5 +214,5 @@ Si tiene alguna pregunta o sugerencia, no dude en contactar a cualquier miembro 
 
 ¡Muchas gracias por ver nuestro repositorio! 
 
-<h4 align="right"> El equipo del Proyecto C1 </h4>
+<h4 align="right"> El equipo del Proyecto C1. </h4>
 
