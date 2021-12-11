@@ -213,6 +213,7 @@ class QLearning():
 		# Terminar la ejecucion del robot y llevar a un estado de reposo
 		self.robot.finalizar_lectura()
 		self.robot.reposo()
+		self.app.js.update_state(self.robot.reset())	# Actualiza el punto en estado de reposo en la tabla de la interfaz web
 
 		# Retornar la tabla aprendida
 		return self.q_table
@@ -233,6 +234,4 @@ class QLearning():
 
 		# Llevar al robot a un estado de reposo
 		self.robot.reposo()
-
-
-		
+		self.app.js.update_state(self.robot.reset())	# Actualiza el punto en estado de reposo en la tabla de la interfaz web
