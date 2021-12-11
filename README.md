@@ -197,9 +197,9 @@ Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones
 
 ## Autores ✒️ <A NAME="autores"></A>
 
-* **Fleming, Martin** - [GitHub](https://github.com/flemingmartin/)
+* **Fleming, Martín** - [GitHub](https://github.com/flemingmartin/)
 * **Morales, Hernán Sergio** - [GitLab](https://gitlab.com/hernansergiomorales)
-* **Saavedra, Marcos David** - [Github](https://github.com/saavedramarcosdavid)
+* **Saavedra, Marcos David** - [GitHub](https://github.com/saavedramarcosdavid)
 
 <!-- ## Licencia 📄
 
