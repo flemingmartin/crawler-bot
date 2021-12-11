@@ -151,7 +151,6 @@ class QLearning():
 		while not self.done:
 			self.semaforo_done.release()
 
-			# Antes estaba el reset acá 
 			dead = False	# Variable que indica si el robot realizó un movimiento no permitido
 			movements = 0 	# Variable que indica la cantidad de movimientos realizados por el robot
 

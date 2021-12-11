@@ -1,5 +1,5 @@
 # Variable para determinar si se está ejecutando en una Raspberry o en PC. True para Raspberry
-_raspi = False
+_raspi = True
 
 if _raspi: 
 	print("--- SISTEMA CARGADO EN UNA RASPI ---")
@@ -46,21 +46,18 @@ class Robot():
 		# Semaforos de proteccion de variables compartidas entre hilos
 		self.semaforo_recompensa = Semaphore(1)
 		self.semaforo_flag_bloqueo = Semaphore(1)
-		self.state = [1,1]
+		self.state = [0,2]
 
 
 	def reset(self):
 		'''
-			Metodo que sirve para el llevar al Robot al estado inicial [1,1]
+			Metodo que sirve para el llevar al Robot al estado inicial [0,2]
 			
 			Devuelve
 			--------
-				El estado [1,1] como una tupla
+				El estado [0,2] como una tupla
 		'''
-		self.state = [1,1]
-		if _raspi:		# Si se está ejecutando en una Raspi, mueve los servomotores al estado inicial
-			self.adminES.mover_servo(self.adminES.pin_servo1,self.angulos[self.state[0]])
-			self.adminES.mover_servo(self.adminES.pin_servo2,self.angulos[self.state[1]])
+		self.state = [0,2]
 		return tuple(self.state)
 
 	def step(self,action):
@@ -74,7 +71,7 @@ class Robot():
 			
 			Devuelve
 			--------
-				El estado [1,1] como una tupla
+				state: el estado del robot como una tupla
 				reward: recompensa obtenida
 				dead: True si el robot intentó hacer una acción incorrecta o False, en caso contrario
 		'''

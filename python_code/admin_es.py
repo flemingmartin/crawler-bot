@@ -38,7 +38,7 @@ class AdminES:
 		'''
 		ancho = (angulo*2000)/180 + 500
 		self.pi.set_servo_pulsewidth(pin, ancho)
-		time.sleep(0.5)
+		time.sleep(0.3)
 
 	def leer_encoder(self, pin):
 		'''
