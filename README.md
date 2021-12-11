@@ -132,8 +132,8 @@ Si se ha incorporado en el arranque del sistema las instrucciones de iniciación
 
 En el caso de que no haber inlcuido dichas instrucciones en el arranque, para poder ejecutar la aplicación, se deberá conectar a la Raspberry Pi mediante protocolo _ssh_ y ejecutar las instrucciones que se muestran a continuación:
 ```
-sudo pigpiod    # Inicialización del demonio pigpio
-python3 app.py  # Ejecución del programa principal, éste levanta el servidor Flask
+> sudo pigpiod    # Inicialización del demonio pigpio
+> python3 app.py  # Ejecución del programa principal, éste levanta el servidor Flask
 ```
 
 _**Aclaraciones**:_ 
