@@ -35,7 +35,7 @@
 			function decrement() {
 				/*
 					Función utilizada para decrementar el valor de input-number.
-					Tiene en cuenta el valor mínimo, la presicion y el step asignados. 
+					Tiene en cuenta el valor mínimo, la precisión y el step asignados. 
 				*/
 				var value = parseFloat(el[0].value);
 				var new_value = value-step;
@@ -50,7 +50,7 @@
 			function increment() {
 				/*
 					Función utilizada para decrementar el valor de input-number.
-					Tiene en cuenta el valor máximo, la presicion y el step asignados. 
+					Tiene en cuenta el valor máximo, la precisión y el step asignados. 
 				*/
 				var value = parseFloat(el[0].value);
 				var new_value = value+step;
