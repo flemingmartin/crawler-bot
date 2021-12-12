@@ -160,7 +160,8 @@ class QLearning():
 				self.semaforo_done.release()
 
 				# Elegir accion a tomar
-				if random.random() < epsilon:
+				eleccion = random.random()
+				if eleccion < epsilon:
 					action = random.randint(0,3)	# Accion aleatoria
 				else:
 					action = np.argmax(self.q_table[state])	# Mejor acción segun el modelo
@@ -205,7 +206,7 @@ class QLearning():
 				state = new_state
 
 				# Actualizacion de la tabla mediante manejo del DOM
-				self.app.js.update_table(list(self.q_table.flatten()),list(state))				
+				self.app.js.update_table(list(self.q_table.flatten()),list(state))
 
 			self.semaforo_done.release()
 		self.semaforo_done.release()
